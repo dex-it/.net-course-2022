@@ -9,17 +9,19 @@ namespace PracticeWithTypes
         static void Main(string[] args)
         {
             Bank bank = new Bank();
-            Client client = new Client() { FirstName = "", LastName="", Patronymic = "", BirthDate = DateTime.Parse("11.06.22"), Passport = 1 };
-            var result = bank.ConvertClientToEmployee(client);
-            Console.WriteLine(result.Passport);
+            Client client = new Client() { FirstName = "Владислав", LastName="Богорош", Patronymic = "Владимирович", BirthDate = DateTime.Parse("11.06.22"), Passport = 1 };
+            var employee = bank.ConvertClientToEmployee(client);
+            Console.WriteLine(employee.Passport);
 
-            Employee employee = new Employee();
             UpdateContactFromEmployee(employee);
             Console.WriteLine(employee.Contract);
 
-            employee.Contract = UpdateContactFromString("", "", "", DateTime.Parse("01.05.22"), 12);
+            employee.Contract = UpdateContactFromString("Олег", "Диордиев", "Михайлович", DateTime.Parse("01.05.22"), 12);
             Console.WriteLine(employee.Contract);
-            
+
+            var rub = UpdateCurrency("Рубль", 16.35M, 0809);
+
+            Console.WriteLine(rub.Name);
             Console.ReadLine();
         }
 
