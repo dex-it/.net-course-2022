@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeWithTypes", "PracticeWithTypes\PracticeWithTypes.csproj", "{74CA699D-47A9-48B6-A92F-A5E5BF46CB6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankService", "BankService\BankService.csproj", "{36B8E28A-FD42-45D6-A1EC-982499659363}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "BankService\Services.csproj", "{36B8E28A-FD42-45D6-A1EC-982499659363}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

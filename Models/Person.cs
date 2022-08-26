@@ -9,11 +9,12 @@ namespace Models
 {
     public class Person
     {
-        public string firstName { get; set; }   
-        public string lastName { get; set; }
-        public int seriesOfPassport { get; set; }
-        public int phoneNumber  { get; set; }
-        public DateTime dateOfBirth { get; set; }    
+        public string FirstName { get; set; }   
+        public string LastName { get; set; }      
+        public int Age { get; set; }
+        public int SeriesOfPassport { get; set; }
+        public string Phone  { get; set; }
+        public DateTime DateOfBirth { get; set; }       
 
     }
 }
