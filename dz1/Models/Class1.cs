@@ -13,11 +13,11 @@
 
     public class Person
     {
-        //Свойства
+        
         public string Name { get; private set; }
         public int Age { get; private set; }
 
-        //Конструктор`ы
+        
         public Person()
         {
             Name = "";
@@ -30,13 +30,12 @@
             Age = age;
         }
 
-        //Методы
-        //-------
+       
     }
 
     public class Employee : Person
     {
-        //Свойства
+        //Свойства/свойства 
         public string Contract { get; private set; } = "Нет контракта";
         public Currency Curr { get; private set; } = new Currency();
 
