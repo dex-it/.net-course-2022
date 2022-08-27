@@ -3,12 +3,20 @@ public class Program
 {
     static void Main()
     {
-        Employee employee1 = new Employee("Alex", new DateTime(1999, 01, 01), 372462);
-        //Console.WriteLine(SampleContract(employee1));
-        Console.WriteLine(employee1.Contract = SampleContract1(employee1.name, employee1.Data, employee1.NumPasport));
-        Currency currency1 = new Currency("Euro");
-        //Console.WriteLine(SampleCurrency(currency1)); 
-        Console.WriteLine(currency1.NameCurrency = SampleCurrency1(currency1.NameCurrency));
+        var employee = new Employee
+        {
+            Name = "Alex",
+            Data = new DateTime(1999, 01, 01),
+            NumPasport = 372462
+        };
+        //Console.WriteLine(SampleContract(employee));
+        Console.WriteLine(employee.Contract = SampleContract1(employee.Name, employee.Data, employee.NumPasport));
+        var currency = new Currency
+        {
+            NameCurrency = "Euro"
+        };
+        //Console.WriteLine(SampleCurrency(currency)); 
+        Console.WriteLine(currency.NameCurrency = SampleCurrency1(currency.NameCurrency));
     }
     //static void SampleContract(Employee employee)
     //{

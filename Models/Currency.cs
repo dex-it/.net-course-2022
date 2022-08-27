@@ -8,11 +8,6 @@ namespace Models
 {
     public class Currency
     {
-        public Currency(string nameCurrency)
-        {
-            NameCurrency = nameCurrency;
-        }
-
         public string NameCurrency { get; set; }
     }
 }
