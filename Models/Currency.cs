@@ -8,6 +8,6 @@ namespace Models
 {
     public class Currency
     {
-        public string NameCurrency { get; set; }
+        public string Name { get; set; }
     }
 }

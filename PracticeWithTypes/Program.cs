@@ -7,31 +7,35 @@ public class Program
         {
             Name = "Alex",
             Data = new DateTime(1999, 01, 01),
-            NumPasport = 372462
+            PasportNum = 372462
         };
-        //Console.WriteLine(SampleContract(employee));
-        Console.WriteLine(employee.Contract = SampleContract1(employee.Name, employee.Data, employee.NumPasport));
+        BadGetSampleContract(employee);
+        Console.WriteLine(employee.Contract);
+        employee.Contract = GetSampleContract(employee.Name, employee.Data, employee.PasportNum);
+        Console.WriteLine(employee.Contract);
         var currency = new Currency
         {
-            NameCurrency = "Euro"
+            Name = "Euro"
         };
-        //Console.WriteLine(SampleCurrency(currency)); 
-        Console.WriteLine(currency.NameCurrency = SampleCurrency1(currency.NameCurrency));
+        BadGetSampleCurrency(currency);
+        Console.WriteLine($"Валюта: {currency.Name}");
+        currency.Name = GetSampleCurrency(currency.Name);
+        Console.WriteLine(currency.Name);
     }
-    //static void SampleContract(Employee employee)
-    //{
-    //    employee.Contract = $"Имя:  {employee.name} Дата рождения: {employee.Data} Номер паспорта:{employee.NumPasport} ";
-
-    //}
-    static string SampleContract1(string name, DateTime date, int numPasport)
+    static void BadGetSampleContract(Employee employee)
     {
-        return $"Имя: {name} Дата рождения: {date} Номер паспорта:{numPasport} ";
+        employee.Contract = $"Имя:  {employee.Name} Дата рождения: {employee.Data} Номер паспорта:{employee.PasportNum} ";
+
     }
-    //static void SampleCurrency(Currency currency)
-    //{
-    //    currency.NameCurrency = $"Валюта: {currency.NameCurrency}";
-    //}
-    static string SampleCurrency1(string name)
+    static string GetSampleContract(string name, DateTime date, int pasportNum)
+    {
+        return $"Имя: {name} Дата рождения: {date} Номер паспорта:{pasportNum} ";
+    }
+    static void BadGetSampleCurrency(Currency currency)
+    {
+        currency.Name = currency.Name;
+    }
+    static string GetSampleCurrency(string name)
     {
         return $"Валюта: {name}";
     }
