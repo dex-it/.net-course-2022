@@ -35,7 +35,8 @@
     {
     }
 
-    public enum EnumCur { RUB, USD, EUR, UAH }
+    public enum CurrenciesEnum { RUB, USD, EUR, UAH }
+
     public struct Currency
     {
         public EnumCur Cur { get; set; }
