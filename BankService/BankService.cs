@@ -4,12 +4,12 @@ namespace Services
 {
     public class BankService
     {
-        public static int CalculateOwnerSalary(int ownerCount, float bankProfit, float bankExpenses)
+        public int CalculateOwnerSalary(int ownerCount, float bankProfit, float bankExpenses)
         {
             return Convert.ToInt32((bankProfit - bankExpenses) / ownerCount);
         }
 
-        public static Employee ClientToEmployee(Client client)
+        public  Employee ClientToEmployee(Client client)
         {
             Employee employee = new Employee()
             {
