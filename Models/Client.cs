@@ -8,6 +8,6 @@ namespace Models
 {
     public class Client : Person
     {
-        
+        public int Phone { get; set; }
     }
 }
