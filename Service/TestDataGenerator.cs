@@ -6,10 +6,10 @@ using Models;
 
 namespace Services
 {
-    class TestDataGenerator
+    public class TestDataGenerator
     {
         
-        public static List<Client> GetClientsList()
+        public List<Client> GetClientsList()
         {
             DateTime start = new DateTime(1950, 1, 1);
             Random rand = new Random();
@@ -20,28 +20,28 @@ namespace Services
                 clientsList.Add(new Client
                 {
                     Name = "Name_" + i,
-                    Data = start.AddDays(rand.Next(range)),
+                    DOB = start.AddDays(rand.Next(range)),
                     PasportNum = rand.Next(100000, 999999),
                     Phone = 77500000 + i
                 }) ;
             }
                 return clientsList;
         }
-        public static Dictionary<int, Client> GetClientsDyctionar()
+        public Dictionary<int, Client> GetClientsDictionary()
         {
             DateTime start = new DateTime(1950, 1, 1);
             Random rand = new Random();
             int range = (DateTime.Today - start).Days;
+            Client client = new Client();
             var clientsDictionary = new Dictionary<int, Client>();
             for (int i = 0; i < 1000; i++)
             {
-                Client client = new Client();
                 clientsDictionary.Add(
                 client.Phone,
                 new Client
                 {
                     Name = "Name_" + i,
-                    Data = start.AddDays(rand.Next(range)),
+                    DOB= start.AddDays(rand.Next(range)),
                     PasportNum = rand.Next(100000, 999999),
                     Phone = 77500000 + i
                 });
@@ -49,7 +49,7 @@ namespace Services
 
             return clientsDictionary;
         }
-        public static List<Employee> GetEmployeesList()
+        public List<Employee> GetEmployeesList()
         {
             DateTime start = new DateTime(1950, 1, 1);
             Random rand = new Random();
@@ -61,7 +61,7 @@ namespace Services
                 employeesList.Add(new Employee
                 {
                     Name = "Name_" + i,
-                    Data = start.AddDays(rand.Next(range)),
+                    DOB = start.AddDays(rand.Next(range)),
                     PasportNum = rand.Next(100000, 999999),
                     Salary = rand.Next(1000,9999)
                 });
