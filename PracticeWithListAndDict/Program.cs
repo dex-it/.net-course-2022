@@ -11,20 +11,20 @@ public class Program
         var clientList = testDataGenerator.GetClientsList();
         var clientDictionary = testDataGenerator.GetClientsDictionary();
         var employeesList = testDataGenerator.GetEmployeesList();
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 4; i++)
         {
             sw.Start();
-            clientList.Find(p => p.Phone == 77500004);
+            clientList.Find(p => p.Phone == 5+i);
             sw.Stop();
-            Console.WriteLine($"Поиск клиента по его номеру телефона в list занял: {sw.Elapsed.Milliseconds}");
+            Console.WriteLine($"{i}Поиск клиента по его номеру телефона в list занял: {sw.Elapsed.Milliseconds}");
             sw.Restart();
         }
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 4; i++)
         {
             sw.Start();
-            clientDictionary.ContainsKey(77500004);
+            clientDictionary.ContainsKey(77500004+i);
             sw.Stop();
-            Console.WriteLine($"\nПоиск клиента по его номеру телефона в Dictionary занял: {sw.Elapsed.Milliseconds}");
+            Console.WriteLine($"\n{i}Поиск клиента по его номеру телефона в Dictionary занял: {sw.Elapsed.Milliseconds}");
             sw.Restart();
         }
 
@@ -41,18 +41,18 @@ public class Program
                           $"\nПолное имя : {employeeMinSalary.Name}" +
                           $"\nНомер паспорта : {employeeMinSalary.PasportNum}" +
                           $"\nЗарплата : {employeeMinSalary.Salary}");
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 4; i++)
         {
             sw.Start();
             var lastСlientByFirstOrDefault = clientDictionary.FirstOrDefault(p => p.Key == clientDictionary.Keys.Last());
             sw.Stop();
-            Console.Write($"\nПоиск последнего клиента списка по ключу занял(способ FirstOrDefault): {sw.Elapsed.Milliseconds}");
+            Console.Write($"\n{i}Поиск последнего клиента списка по ключу занял(способ FirstOrDefault): {sw.Elapsed.Milliseconds}");
             sw.Restart();
 
             sw.Start();
             var lastСlientByKey = clientDictionary[clientDictionary.Keys.Last()];
             sw.Stop();
-            Console.Write($"\nПоиск последнего клиента списка по ключу занял(способ с ключом): {sw.Elapsed.Milliseconds}");
+            Console.Write($"\n{i}Поиск последнего клиента списка по ключу занял(способ с ключом): {sw.Elapsed.Milliseconds}");
             sw.Restart();
         }
     }

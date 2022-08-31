@@ -32,21 +32,20 @@ namespace Services
             DateTime start = new DateTime(1950, 1, 1);
             Random rand = new Random();
             int range = (DateTime.Today - start).Days;
-            Client client = new Client();
+            //Client client = new Client(); - это уже не нужно связи с тем, что то не работает
             var clientsDictionary = new Dictionary<int, Client>();
             for (int i = 0; i < 1000; i++)
             {
                 clientsDictionary.Add(
-                client.Phone,
+                i, //client.Phone - я хотела добавить это изначально, но с ним оно не работает
                 new Client
                 {
                     Name = "Name_" + i,
                     DOB= start.AddDays(rand.Next(range)),
                     PasportNum = rand.Next(100000, 999999),
-                    Phone = 77500000 + i
+                    Phone = i //тут я хотела 77500000+i, но так не понятно будет нашел или нет в итоге
                 });
             }
-
             return clientsDictionary;
         }
         public List<Employee> GetEmployeesList()
