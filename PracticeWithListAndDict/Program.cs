@@ -38,7 +38,7 @@ public class Program
         }
         var employeeMinSalary = employeesList.FirstOrDefault(s => s.Salary == employeesList.Min(s => s.Salary));
         Console.WriteLine($"\nСотрудник с минимально заработной платой:" +
-                          $"\nПолное имя : {employeeMinSalary.Name}" +
+                          $"\nИмя : {employeeMinSalary.Name}" +
                           $"\nНомер паспорта : {employeeMinSalary.PasportNum}" +
                           $"\nЗарплата : {employeeMinSalary.Salary}");
         for (int i = 0; i < 4; i++)
@@ -46,13 +46,13 @@ public class Program
             sw.Start();
             var lastСlientByFirstOrDefault = clientDictionary.FirstOrDefault(p => p.Key == clientDictionary.Keys.Last());
             sw.Stop();
-            Console.Write($"\n{i}Поиск последнего клиента списка по ключу занял(способ FirstOrDefault): {sw.Elapsed.Milliseconds}");
+            Console.Write($"\n{i} Поиск последнего клиента списка по ключу занял(способ FirstOrDefault): {sw.Elapsed.Milliseconds}");
             sw.Restart();
 
             sw.Start();
             var lastСlientByKey = clientDictionary[clientDictionary.Keys.Last()];
             sw.Stop();
-            Console.Write($"\n{i}Поиск последнего клиента списка по ключу занял(способ с ключом): {sw.Elapsed.Milliseconds}");
+            Console.Write($"\n{i} Поиск последнего клиента списка по ключу занял(способ с ключом): {sw.Elapsed.Milliseconds}");
             sw.Restart();
         }
     }
