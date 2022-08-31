@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{BCDD88E8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{29A7CFFD-6B8A-43A2-95FA-D25A014BCA70}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeWithTypes", "PracticeWithTypes\PracticeWithTypes.csproj", "{A8870493-2DB7-4AAA-9A2A-4C20DB7FEFCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeCastingAndTypeConversion", "PracticeWithTypes\PracticeCastingAndTypeConversion.csproj", "{A8870493-2DB7-4AAA-9A2A-4C20DB7FEFCA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DDFC73CE-A513-4E2F-B102-CB09D498A415} = {DDFC73CE-A513-4E2F-B102-CB09D498A415}
 	EndProjectSection
