@@ -8,65 +8,65 @@ namespace Services
 {
     class TestDataGenerator
     {
-        static void Main(string[] args)
-        {
-            var ClientsList = GetClientsList();
-        }
-
+        
         public static List<Client> GetClientsList()
-        { 
-            Random Rand = new Random(); 
-            var clients = new List<Client>();
-
+        {
+            DateTime start = new DateTime(1950, 1, 1);
+            Random rand = new Random();
+            int range = (DateTime.Today - start).Days;
+            var clientsList = new List<Client>();
             for (int i = 0; i < 1000; i++)
             {
-                clients.Add(new Client
+                clientsList.Add(new Client
                 {
                     Name = "Name_" + i,
-                    Data = new DateTime(1999, 01, 01),
-                    PasportNum = Rand.Next(100000, 999999),
+                    Data = start.AddDays(rand.Next(range)),
+                    PasportNum = rand.Next(100000, 999999),
                     Phone = 77500000 + i
                 }) ;
             }
-                return clients;
+                return clientsList;
         }
         public static Dictionary<int, Client> GetClientsDyctionar()
         {
-            Random Rand = new Random();
-            var clients = new Dictionary<int, Client>();
-
-
+            DateTime start = new DateTime(1950, 1, 1);
+            Random rand = new Random();
+            int range = (DateTime.Today - start).Days;
+            var clientsDictionary = new Dictionary<int, Client>();
             for (int i = 0; i < 1000; i++)
             {
                 Client client = new Client();
-                clients.Add(
+                clientsDictionary.Add(
                 client.Phone,
                 new Client
                 {
                     Name = "Name_" + i,
-                    Data = new DateTime(1999, 01, 01),
-                    PasportNum = Rand.Next(100000, 999999),
+                    Data = start.AddDays(rand.Next(range)),
+                    PasportNum = rand.Next(100000, 999999),
                     Phone = 77500000 + i
                 });
             }
 
-            return clients;
+            return clientsDictionary;
         }
         public static List<Employee> GetEmployeesList()
         {
+            DateTime start = new DateTime(1950, 1, 1);
             Random rand = new Random();
-            var employees = new List<Employee>();
+            int range = (DateTime.Today - start).Days;
+            var employeesList = new List<Employee>();
 
             for (int i = 0; i < 1000; i++)
             {
-                employees.Add(new Employee
+                employeesList.Add(new Employee
                 {
                     Name = "Name_" + i,
-                    Data = new DateTime(1999, 01, 01),
-                    PasportNum = rand.Next(100000, 999999)
+                    Data = start.AddDays(rand.Next(range)),
+                    PasportNum = rand.Next(100000, 999999),
+                    Salary = rand.Next(1000,9999)
                 });
             }
-            return employees;
+            return employeesList;
         }
 
     }
