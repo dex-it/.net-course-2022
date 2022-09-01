@@ -13,25 +13,33 @@ public class Program
         var employeesList = testDataGenerator.GetEmployeesList();
         for (int i = 0; i < 4; i++)
         {
-            sw.Start();
-            clientList.Find(p => p.Phone == i);
-            sw.Stop();
-            Console.WriteLine($"{i}Поиск клиента по его номеру телефона в list занял: {sw.Elapsed.Milliseconds}");
-            sw.Restart();
+            if (i == 3)
+            {
+                clientList.Add(new Client
+                {
+                    Name = "Ivan",
+                    birtDate = new DateTime(1990, 01, 01),
+                    PasportNum = 324786,
+                    Phone = 77520034
+                });
+                sw.Start();
+                clientList.Find(p => p.Phone == 77520034);
+                sw.Stop();
+                Console.WriteLine($"{i}Поиск клиента по его номеру телефона в list занял: {sw.Elapsed.Milliseconds}");
+                sw.Restart();
+            }
+            else
+            {
+                sw.Start();
+                clientList.Find(p => p.Phone == i);
+                sw.Stop();
+                Console.WriteLine($"{i}Поиск клиента по его номеру телефона в list занял: {sw.Elapsed.Milliseconds}");
+                sw.Restart();
+
+            }
         }
 
-        clientList.Add(new Client
-        {
-            Name = "Ivan",
-            birtDate = new DateTime(1990, 01, 01),
-            PasportNum = 324786,
-            Phone = 77520034
-        });
-        sw.Start();
-        clientList.Find(p => p.Phone == 77520034);
-        sw.Stop();
-        Console.WriteLine($"Поиск клиента Ivan по его номеру телефона в list занял: {sw.Elapsed.Milliseconds}");
-        sw.Restart();
+       
 
         for (int i = 0; i < 4; i++)
         {
