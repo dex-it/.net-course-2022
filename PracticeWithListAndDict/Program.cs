@@ -14,27 +14,41 @@ public class Program
         for (int i = 0; i < 4; i++)
         {
             sw.Start();
-            clientList.Find(p => p.Phone == 5+i);
+            clientList.Find(p => p.Phone == i);
             sw.Stop();
             Console.WriteLine($"{i}Поиск клиента по его номеру телефона в list занял: {sw.Elapsed.Milliseconds}");
             sw.Restart();
         }
+
+        clientList.Add(new Client
+        {
+            Name = "Ivan",
+            birtDate = new DateTime(1990, 01, 01),
+            PasportNum = 324786,
+            Phone = 77520034
+        });
+        sw.Start();
+        clientList.Find(p => p.Phone == 77520034);
+        sw.Stop();
+        Console.WriteLine($"Поиск клиента Ivan по его номеру телефона в list занял: {sw.Elapsed.Milliseconds}");
+        sw.Restart();
+
         for (int i = 0; i < 4; i++)
         {
             sw.Start();
-            clientDictionary.ContainsKey(77500004+i);
+            clientDictionary.ContainsKey(i);
             sw.Stop();
             Console.WriteLine($"\n{i}Поиск клиента по его номеру телефона в Dictionary занял: {sw.Elapsed.Milliseconds}");
             sw.Restart();
         }
 
-        var clientsUnder18 = clientList.Where(y => DateTime.Now.Year - y.DOB.Year < 18).ToList();
+        var clientsUnder18 = clientList.Where(y => DateTime.Now.Year - y.birtDate.Year < 18).ToList();
         foreach (Client client in clientsUnder18)
         {
             Console.WriteLine("\nКлиенты младше 18:" +
                               $"\nИмя : {client.Name}" +
                               $" \nНомер паспорта : {client.PasportNum}" +
-                              $" \nДата рождения : {client.DOB}");
+                              $" \nДата рождения : {client.birtDate}");
         }
         var employeeMinSalary = employeesList.FirstOrDefault(s => s.Salary == employeesList.Min(s => s.Salary));
         Console.WriteLine($"\nСотрудник с минимально заработной платой:" +
