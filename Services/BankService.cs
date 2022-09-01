@@ -14,7 +14,7 @@ namespace Services
             return new Employee()
             {
                 Name = client.Name,
-                DOB = client.DOB,
+                BirtDate = client.BirtDate,
                 PasportNum = client.PasportNum,
                 Salary = 0
             };

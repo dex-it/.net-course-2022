@@ -9,13 +9,13 @@ public class Program
         var client = new Client
         {
             Name = "Alex",
-            DOB = new DateTime(1999, 01, 01),
+            BirtDate = new DateTime(1999, 01, 01),
             PasportNum = 372462
         };
         var employee = new Employee();
         employee = bankService.ClientInEmployee(client);
         Console.WriteLine($"Перевод клиента в работника" + 
-            $"\nИмя: {employee.Name} Дата рождения: {employee.DOB} Номер паспорта:{employee.PasportNum}" +
+            $"\nИмя: {employee.Name} Дата рождения: {employee.BirtDate} Номер паспорта:{employee.PasportNum}" +
             $"Зарплата: {employee.Salary}");
 
     }
