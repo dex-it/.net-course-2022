@@ -18,7 +18,7 @@ public class Program
                 clientList.Add(new Client
                 {
                     Name = "Ivan",
-                    birtDate = new DateTime(1990, 01, 01),
+                    BirtDate = new DateTime(1990, 01, 01),
                     PasportNum = 324786,
                     Phone = 77520034
                 });
@@ -50,13 +50,13 @@ public class Program
             sw.Restart();
         }
 
-        var clientsUnder18 = clientList.Where(y => DateTime.Now.Year - y.birtDate.Year < 18).ToList();
+        var clientsUnder18 = clientList.Where(y => DateTime.Now.Year - y.BirtDate.Year < 18).ToList();
         foreach (Client client in clientsUnder18)
         {
             Console.WriteLine("\nКлиенты младше 18:" +
                               $"\nИмя : {client.Name}" +
                               $" \nНомер паспорта : {client.PasportNum}" +
-                              $" \nДата рождения : {client.birtDate}");
+                              $" \nДата рождения : {client.BirtDate}");
         }
         var employeeMinSalary = employeesList.FirstOrDefault(s => s.Salary == employeesList.Min(s => s.Salary));
         Console.WriteLine($"\nСотрудник с минимально заработной платой:" +

@@ -20,7 +20,7 @@ namespace Services
                 clientsList.Add(new Client
                 {
                     Name = "Name_" + i,
-                    birtDate = start.AddDays(rand.Next(range)),
+                    BirtDate = start.AddDays(rand.Next(range)),
                     PasportNum = rand.Next(100000, 999999),
                     Phone = i
                 }) ;
@@ -40,7 +40,7 @@ namespace Services
                 new Client
                 {
                     Name = "Name_" + i,
-                    birtDate= start.AddDays(rand.Next(range)),
+                    BirtDate= start.AddDays(rand.Next(range)),
                     PasportNum = rand.Next(100000, 999999),
                     Phone = i 
                 });
@@ -59,7 +59,7 @@ namespace Services
                 employeesList.Add(new Employee
                 {
                     Name = "Name_" + i,
-                    birtDate = start.AddDays(rand.Next(range)),
+                    BirtDate = start.AddDays(rand.Next(range)),
                     PasportNum = rand.Next(100000, 999999),
                     Salary = rand.Next(1000,9999)
                 });

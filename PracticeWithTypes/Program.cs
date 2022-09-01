@@ -6,12 +6,12 @@ public class Program
         var employee = new Employee
         {
             Name = "Alex",
-            birtDate = new DateTime(1999, 01, 01),
+            BirtDate = new DateTime(1999, 01, 01),
             PasportNum = 372462
         };
         BadGetSampleContract(employee);
         Console.WriteLine(employee.Contract);
-        employee.Contract = GetSampleContract(employee.Name, employee.birtDate, employee.PasportNum);
+        employee.Contract = GetSampleContract(employee.Name, employee.BirtDate, employee.PasportNum);
         Console.WriteLine(employee.Contract);
         var currency = new Currency
         {
@@ -24,7 +24,7 @@ public class Program
     }
     static void BadGetSampleContract(Employee employee)
     {
-        employee.Contract = $"Имя:  {employee.Name} Дата рождения: {employee.birtDate} Номер паспорта:{employee.PasportNum} ";
+        employee.Contract = $"Имя:  {employee.Name} Дата рождения: {employee.BirtDate} Номер паспорта:{employee.PasportNum} ";
 
     }
     static string GetSampleContract(string name, DateTime date, int pasportNum)
