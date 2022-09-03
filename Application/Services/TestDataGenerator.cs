@@ -36,4 +36,43 @@ public class TestDataGenerator
         var genEmployee = randEmployee.Generate(count);
         return new List<Employee>(genEmployee.ToList());
     }
+
+    public Dictionary<Client, List<Account>> GetClientAccountDictionary(List<Client> clients)
+    {
+        Models.Currency globUsdCurrency = new Models.Currency
+        {
+            Code = 840,
+            Name = "USD"
+        };
+        Models.Currency globEurCurrency = new Models.Currency
+        {
+            Code = 978,
+            Name = "EUR"
+        };
+        
+        var randUsdAccount = new Faker<Account>()
+            .CustomInstantiator(f => new Account())
+            .RuleFor(a => a.Amount, f => f.Random.Float(0F, 99999F))
+            .RuleFor(a => a.Currency, globUsdCurrency);
+        var genUsdAccount = randUsdAccount.Generate(clients.Count);
+
+        var randEurAccount = new Faker<Account>()
+            .CustomInstantiator(f => new Account())
+            .RuleFor(a => a.Amount, f => f.Random.Float(0F, 99999F))
+            .RuleFor(a => a.Currency, globEurCurrency);
+        var genEurAccount = randEurAccount.Generate(clients.Count);
+        
+        var clientAccountDict = new Dictionary<Client, List<Account>>();
+        for (var i = 0; i < clients.Count; i++)
+        {
+            var accounts = new List<Account>
+            {
+                genUsdAccount[i],
+                genEurAccount[i],
+            };
+            clientAccountDict.Add(clients[i], accounts);
+        }
+
+        return clientAccountDict;
+    }
 }

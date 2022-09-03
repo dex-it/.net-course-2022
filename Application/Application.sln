@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PracticeWithTypes", "Practi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticeWithTypes", "PracticeWithTypes\PracticeWithTypes.csproj", "{7557D7F2-1FEC-45E2-B883-705EF87033F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceTests", "ServiceTests\ServiceTests.csproj", "{9FD7F101-FF46-4000-A0C3-D1E4F775D870}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{7557D7F2-1FEC-45E2-B883-705EF87033F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7557D7F2-1FEC-45E2-B883-705EF87033F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7557D7F2-1FEC-45E2-B883-705EF87033F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FD7F101-FF46-4000-A0C3-D1E4F775D870}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FD7F101-FF46-4000-A0C3-D1E4F775D870}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FD7F101-FF46-4000-A0C3-D1E4F775D870}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FD7F101-FF46-4000-A0C3-D1E4F775D870}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{69DFF21E-6755-4785-8160-0E3DE504D3D3} = {5789F047-CC75-419E-A040-A231A9ACC5F4}

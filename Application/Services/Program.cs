@@ -10,7 +10,7 @@ class Program
         var clientCollection = dataGenerators.GetClientCollection(1000);
         var clientDictionary = dataGenerators.GetClientDictionary(clientCollection);
         var employeeCollection = dataGenerators.GetEmployeeCollection(1000);
-        var lastClient = clientCollection.Last().PhoneNumber;
+        var lastClientPhoneNumber = clientCollection.Last().PhoneNumber;
         var sw = new Stopwatch();
 
         var maxItteration = 3;
@@ -18,7 +18,7 @@ class Program
         for (int i = 0; i < maxItteration; i++)
         {
             sw.Start();
-            var getLastClientCollection  = clientCollection.FirstOrDefault(c => c.PhoneNumber == lastClient);
+            var getLastClientFromCollection  = clientCollection.FirstOrDefault(c => c.PhoneNumber == lastClientPhoneNumber);
             sw.Stop();
             Console.WriteLine($"{i + 1}. Поиск клиента по его номеру телефона, среди элементов коллекции: {sw.ElapsedTicks} тиков");
             sw.Reset();
@@ -28,7 +28,7 @@ class Program
         for (int i = 0; i < maxItteration; i++)
         {
             sw.Start();
-            var getLastClientDictionary = clientDictionary[lastClient];
+            var getLastClientFromDictionary = clientDictionary[lastClientPhoneNumber];
             sw.Stop();
             Console.WriteLine(
                 $"{i + 1}. Поиск клиента по его номеру телефона, среди элементов словаря: {sw.ElapsedTicks} тиков");
@@ -80,13 +80,13 @@ class Program
         for (int i = 0; i < maxItteration; i++)
         {
             sw.Start();
-            var getLastClientDictionary1 = clientDictionary.FirstOrDefault(c => c.Key == lastClient);
+            var getLastClientDictionary1 = clientDictionary.FirstOrDefault(c => c.Key == lastClientPhoneNumber);
             sw.Stop();
             var resFirstMethod = sw.ElapsedTicks;
             sw.Reset();
             
             sw.Start();
-            var getLastClientDictionary2 = clientDictionary[lastClient];
+            var getLastClientDictionary2 = clientDictionary[lastClientPhoneNumber];
             sw.Stop();
             var resSecondMethod = sw.ElapsedTicks;
             Console.WriteLine($"{i + 1}. Разница между методами FirstOrDefault и поиск по ключу: {resFirstMethod - resSecondMethod} тиков");
