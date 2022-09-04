@@ -20,14 +20,4 @@ public class Employee : Person
                employee.BirthdayDate == BirthdayDate &&
                employee.PhoneNumber == PhoneNumber;
     }
-
-    public override int GetHashCode()
-    {
-        return Salary.GetHashCode() *
-               Contract.GetHashCode() *
-               FirstName.GetHashCode() *
-               LastName.GetHashCode() *
-               BirthdayDate.GetHashCode() *
-               PhoneNumber.GetHashCode();
-    }
 }

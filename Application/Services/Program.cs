@@ -7,9 +7,9 @@ class Program
     static void Main(string[] args)
     {
         var dataGenerators = new TestDataGenerator();
-        var clientCollection = dataGenerators.GetClientCollection(1000);
+        var clientCollection = dataGenerators.GetClientList(1000);
         var clientDictionary = dataGenerators.GetClientDictionary(clientCollection);
-        var employeeCollection = dataGenerators.GetEmployeeCollection(1000);
+        var employeeCollection = dataGenerators.GetEmployeeList(1000);
         var lastClientPhoneNumber = clientCollection.Last().PhoneNumber;
         var sw = new Stopwatch();
 

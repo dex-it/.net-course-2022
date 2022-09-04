@@ -1,13 +1,13 @@
+using Models;
 using Bogus;
 using Bogus.DataSets;
-using Models;
 
 namespace Services;
 
 public class TestDataGenerator
 {
     
-    public List<Client> GetClientCollection(int count)
+    public List<Client> GetClientList(int count)
     {
         var randClinet = new Faker<Client>()
             .CustomInstantiator(f => new Client())
@@ -24,7 +24,7 @@ public class TestDataGenerator
         return new Dictionary<int, Client>(clients.ToDictionary(k => k.PhoneNumber, v => v));
     }
     
-    public List<Employee> GetEmployeeCollection(int count)
+    public List<Employee> GetEmployeeList(int count)
     {
         var randEmployee = new Faker<Employee>()
             .CustomInstantiator(f => new Employee())
@@ -39,12 +39,12 @@ public class TestDataGenerator
 
     public Dictionary<Client, List<Account>> GetClientAccountDictionary(List<Client> clients)
     {
-        Models.Currency globUsdCurrency = new Models.Currency
+        var globUsdCurrency = new Models.Currency
         {
             Code = 840,
             Name = "USD"
         };
-        Models.Currency globEurCurrency = new Models.Currency
+        var globEurCurrency = new Models.Currency
         {
             Code = 978,
             Name = "EUR"
@@ -54,21 +54,21 @@ public class TestDataGenerator
             .CustomInstantiator(f => new Account())
             .RuleFor(a => a.Amount, f => f.Random.Float(0F, 99999F))
             .RuleFor(a => a.Currency, globUsdCurrency);
-        var genUsdAccount = randUsdAccount.Generate(clients.Count);
+        var usdAccountList = randUsdAccount.Generate(clients.Count);
 
         var randEurAccount = new Faker<Account>()
             .CustomInstantiator(f => new Account())
             .RuleFor(a => a.Amount, f => f.Random.Float(0F, 99999F))
             .RuleFor(a => a.Currency, globEurCurrency);
-        var genEurAccount = randEurAccount.Generate(clients.Count);
+        var eurAccountList = randEurAccount.Generate(clients.Count);
         
         var clientAccountDict = new Dictionary<Client, List<Account>>();
         for (var i = 0; i < clients.Count; i++)
         {
             var accounts = new List<Account>
             {
-                genUsdAccount[i],
-                genEurAccount[i],
+                usdAccountList[i],
+                eurAccountList[i],
             };
             clientAccountDict.Add(clients[i], accounts);
         }

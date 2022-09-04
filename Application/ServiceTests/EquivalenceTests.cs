@@ -11,7 +11,7 @@ public class EquivalenceTests
     {
         // Arrange
         var dataGenerators = new TestDataGenerator();
-        var clientCollection = dataGenerators.GetClientCollection(10);
+        var clientCollection = dataGenerators.GetClientList(10);
         var clientAccountDictionary = dataGenerators.GetClientAccountDictionary(clientCollection);
         var firstClient = clientCollection.First();
         
@@ -30,12 +30,12 @@ public class EquivalenceTests
     }
     
     [Fact]
-    public void GetEmployeeHashCodeNecessityPositiveTest()
+    public void GetEmployeeEqualsNecessityPositiveTest()
     {
         // Arrange
         var dataGenerators = new TestDataGenerator();
-        var employeeCollection = dataGenerators.GetEmployeeCollection(10);
-        var firstEmployee = employeeCollection.First();
+        var employeeList = dataGenerators.GetEmployeeList(10);
+        var firstEmployee = employeeList.First();
 
         // Act
         var newEmployee = new Employee()
@@ -49,6 +49,6 @@ public class EquivalenceTests
         };
 
         // Assert
-        Assert.Equal(employeeCollection.First(), newEmployee);
+        Assert.Equal(employeeList.First(), newEmployee);
     }
 }
