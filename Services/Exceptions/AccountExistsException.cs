@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace Services.Exceptions
 {
-    public class ClientUnder18Exception : Exception
+    public class AccountExistsException : Exception
     {
-        public ClientUnder18Exception(string? message) : base(message)
+        public AccountExistsException(string? message) : base(message)
         {
         }
     }

@@ -10,17 +10,20 @@ namespace Services
 {
     public class EmployeeService
     {
+        private List<Employee> listEmployees = new List<Employee>();
         public void AddEmployee(Employee employee)
         {
+            
             if (employee.PasportNum == 0)
             {
-                throw new EmployeeNoPasportData("У работника нет паспортных данных");
+                throw new NoPasportData("У работника нет паспортных данных");
             }
 
             if (DateTime.Now.Year - employee.BirtDate.Year < 18)
             {
-                throw new EmployeeUnder18Exception("Работник меньше 18 лет");
+                throw new Under18Exception("Работник меньше 18 лет");
             }
+            listEmployees.Add(employee);
         }
     }
 }
