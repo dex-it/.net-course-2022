@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Services.Filters;
+﻿using Services.Filters;
 using Models;
 using Services.Exceptions;
 
@@ -35,18 +30,25 @@ namespace Services
 
         public Dictionary<Client, List<Account>> GetClients(ClientFilter clientFilter)
         {
-            Dictionary<Client, List<Account>> filteredDictionary = new Dictionary<Client, List<Account>>();
+            var selection = _clientStorage._dictionaryClient.Select(p => p);
 
             if (clientFilter.Name != null)
-                filteredDictionary = _clientStorage._dictionaryClient.Where(p => p.Key.Name == clientFilter.Name).ToDictionary(k => k.Key, k => k.Value);
+                selection = _clientStorage._dictionaryClient.
+                    Where(p => p.Key.Name == clientFilter.Name);
 
             if (clientFilter.PasportNum != 0)
-                filteredDictionary = _clientStorage._dictionaryClient.Where(p => p.Key.PasportNum == clientFilter.PasportNum).ToDictionary(k => k.Key, k => k.Value);
+                selection = _clientStorage._dictionaryClient.
+                    Where(p => p.Key.PasportNum == clientFilter.PasportNum);
 
-            if (clientFilter.BirtDate != new DateTime())
-                filteredDictionary = _clientStorage._dictionaryClient.Where(p => p.Key.BirtDate.Date == clientFilter.BirtDate.Date).ToDictionary(k => k.Key, k => k.Value);
+            if (clientFilter.StartDate != new DateTime())
+                selection = _clientStorage._dictionaryClient.
+                    Where(p => p.Key.BirtDate == clientFilter.StartDate);
 
-            return filteredDictionary;
+            if (clientFilter.EndDate != new DateTime())
+                selection = _clientStorage._dictionaryClient.
+                    Where(p => p.Key.BirtDate == clientFilter.EndDate);
+
+            return selection.ToDictionary(k => k.Key, k => k.Value);
         }
 
 

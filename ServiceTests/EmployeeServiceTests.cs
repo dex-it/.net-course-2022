@@ -1,18 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
+﻿using Xunit;
 using Services;
 using Models;
 using Services.Exceptions;
+using Services.Filters;
 
 namespace ServiceTests
 {
     public class EmployeeServiceTests
     {
-     
+        [Fact]
+        public void GetEmployeesFilterTest()
+        {
+            // Arrange
+            var employeeFilters = new EmployeeFilters();
+            var employeeStorage = new EmployeeStorage();
+            var testDataGenerator = new TestDataGenerator();
+
+
+            for (int i = 0; i < 5; i++)
+            {
+                employeeStorage.AddEmployee(testDataGenerator.GetFakeDataEmployee().Generate());
+            }
+            var employeeService = new EmployeeService(employeeStorage);
+
+            //Act
+            var youngClient = employeeStorage._listEmployees.Min(p => p.BirtDate);
+            var oldClient = employeeStorage._listEmployees.Max(p => p.BirtDate);
+            var averageAge = employeeStorage._listEmployees.Average(p => DateTime.Now.Year - p.BirtDate.Year);
+
+            //Assert
+            if (employeeStorage._listEmployees.Count != 5)
+            {
+                Assert.True(false);
+            }
+
+        }
 
         //[Fact]
         //public void AddEmployeeLimit18YearsExceptionTest()

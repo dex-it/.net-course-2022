@@ -27,7 +27,6 @@ namespace ServiceTests
                 clientStorage.AddClient(testDataGenerator.GetFakeDataClient().Generate());
             }
             var clientService = new ClientService(clientStorage);
-            var client = clientStorage._dictionaryClient.Keys.First();
 
            //Act
             var youngClient = clientStorage._dictionaryClient.Min(p => p.Key.BirtDate);

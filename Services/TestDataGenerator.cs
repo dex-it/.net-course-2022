@@ -27,6 +27,9 @@ namespace Services
                 .RuleFor(u => u.Name, f => f.Name.ToString())
                 .RuleFor(u => u.PasportNum, f => f.Random.Int(100000, 999999))
                 .RuleFor(u => u.BirtDate, f => f.Date.Past(100))
+                .RuleFor(u => u.Contract, (f, u) => "PasportNum: " + u.PasportNum +
+                                                    "\nName: " + u.Name +
+                                                    "\nBirtDate: " + u.BirtDate.ToString("D"))
                 .RuleFor(u => u.Salary, f => f.Random.Int(1000, 9999));
             return generator;
         }
