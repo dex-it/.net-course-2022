@@ -61,7 +61,7 @@ namespace ServiceTests
             }
         }
         [Fact]
-        public void AddAccountExistsException()
+        public void AddClientExistsException()
         {
             var clientService = new ClientService();
             var ivan = new Client
@@ -70,23 +70,51 @@ namespace ServiceTests
                 BirtDate = new DateTime(2006, 01, 01),
                 PasportNum = 324763
             };
-            var accountIvan = new Account
+            var ivanI = new Client
             {
-                Currency = new Currency
-                {
-                    Name = "Euro",
-                    Code = 8
-                },
-                Amount = 45
+                Name = "Ivan",
+                BirtDate = new DateTime(2006, 01, 01),
+                PasportNum = 324763
             };
             try
             {
-                clientService.AddAccount(ivan,accountIvan);
+                clientService.AddClient(ivan);
+                clientService.AddClient(ivanI);
+
             }
-            catch (AccountExistsException e)
+            catch (ExistsException e)
             {
-                Assert.Equal(("Такой клиент уже существует"), e.Message);
-                Assert.Equal(typeof(AccountExistsException), e.GetType());
+                Assert.Equal("Такой клиент существует", e.Message);
+                Assert.Equal(typeof(ExistsException), e.GetType());
+            }
+            catch (Exception e)
+            {
+                Assert.True(false);
+            }
+        }
+        [Fact]
+        public void AddAccountNoExistsClientAndAccountExistsExceptionTest()
+        {
+            var clientService = new ClientService();
+            var ivan = new Client
+            {
+                Name = "Ivan",
+                BirtDate = new DateTime(2006, 01, 01),
+                PasportNum = 324763
+            };
+            var ivanEx = new Client
+            {
+                Name = "Ivan",
+                BirtDate = new DateTime(2006, 01, 01),
+                PasportNum = 324763
+            };
+
+            try
+            {
+                clientService.AddClient(ivan);
+                clientService.AddAccount(ivan);
+                Assert.Throws<ExistsException>(() => clientService.AddAccount(ivanEx));
+                Assert.Throws<ExistsException>(() => clientService.AddAccount(ivan));
             }
             catch (Exception e)
             {

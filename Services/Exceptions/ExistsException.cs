@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Services.Exceptions
 {
-    public class AccountExistsException : Exception
+    public class ExistsException : Exception
     {
-        public AccountExistsException(string? message) : base(message)
+        public ExistsException(string? message) : base(message)
         {
         }
     }
