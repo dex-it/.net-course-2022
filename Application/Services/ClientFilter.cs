@@ -1,10 +1,11 @@
-﻿namespace Models;
+namespace Services;
 
-public class Person
+public class ClientFilter
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public int Passport { get; set; }
-    public DateTime BirthdayDate { get; set; }
+    public DateTime DateStart { get; set; }
+    public DateTime DateEnd { get; set; }
     public int PhoneNumber { get; set; }
 }
