@@ -29,11 +29,14 @@ namespace ServiceTests
             var averageAge = employeeStorage._listEmployees.Average(p => DateTime.Now.Year - p.BirtDate.Year);
 
             //Assert
-            if (employeeStorage._listEmployees.Count != 5)
+            if (averageAge > 18)
+            {
+                Assert.True(true);
+            }
+            else
             {
                 Assert.True(false);
             }
-
         }
 
         //[Fact]

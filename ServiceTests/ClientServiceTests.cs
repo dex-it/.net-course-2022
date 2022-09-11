@@ -34,12 +34,16 @@ namespace ServiceTests
             var averageAge = clientStorage._dictionaryClient.Average(p => DateTime.Now.Year - p.Key.BirtDate.Year);
 
             //Assert
-            if (clientStorage._dictionaryClient.Count != 5)
+            if (averageAge > 18)
+            {
+                Assert.True(true);
+            }
+            else
             {
                 Assert.True(false);
             }
-
         }
+
         //[Fact]
         //public void AddClientLimit18YearsExceptionTest()
         //{
