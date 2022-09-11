@@ -22,21 +22,23 @@ namespace ServiceTests
             var testDataGenerator = new TestDataGenerator();
             
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 5; i++)
             {
                 clientStorage.AddClient(testDataGenerator.GetFakeDataClient().Generate());
             }
             var clientService = new ClientService(clientStorage);
-            var client = clientStorage.dictionaryClient.Keys.First();
+            var client = clientStorage._dictionaryClient.Keys.First();
 
            //Act
-            var youngClient = clientStorage.dictionaryClient.Min(p => p.Key.BirtDate);
-            clientFilter.BirtDate = new DateTime();
-            var oldClient = clientStorage.dictionaryClient.Max(p => p.Key.BirtDate);
-            clientFilter.BirtDate = new DateTime();
-            var averageAge = clientStorage.dictionaryClient.Average(p => DateTime.Now.Year - p.Key.BirtDate.Year);
-            //
-            
+            var youngClient = clientStorage._dictionaryClient.Min(p => p.Key.BirtDate);
+            var oldClient = clientStorage._dictionaryClient.Max(p => p.Key.BirtDate);
+            var averageAge = clientStorage._dictionaryClient.Average(p => DateTime.Now.Year - p.Key.BirtDate.Year);
+
+            //Assert
+            if (clientStorage._dictionaryClient.Count != 5)
+            {
+                Assert.True(false);
+            }
 
         }
         //[Fact]

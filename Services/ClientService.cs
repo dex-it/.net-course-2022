@@ -13,26 +13,38 @@ namespace Services
     {
 
         private ClientStorage _clientStorage { get; set; }
+
         public ClientService(ClientStorage clientStorage)
         {
-            this._clientStorage = clientStorage;
+            _clientStorage = clientStorage;
         }
+
         public void AddClient(Client client)
         {
+            if (client.PasportNum == 0)
+            {
+                throw new NoPasportData("У клиента нет паспортных данных");
+            }
+
+            if (DateTime.Now.Year - client.BirtDate.Year < 18)
+            {
+                throw new Under18Exception("Клиент меньше 18 лет");
+            }
             _clientStorage.AddClient(client);
         }
+
         public Dictionary<Client, List<Account>> GetClients(ClientFilter clientFilter)
         {
             Dictionary<Client, List<Account>> filteredDictionary = new Dictionary<Client, List<Account>>();
 
             if (clientFilter.Name != null)
-                filteredDictionary = _clientStorage.dictionaryClient.Where(p => p.Key.Name == clientFilter.Name).ToDictionary(k => k.Key, k => k.Value);
+                filteredDictionary = _clientStorage._dictionaryClient.Where(p => p.Key.Name == clientFilter.Name).ToDictionary(k => k.Key, k => k.Value);
 
             if (clientFilter.PasportNum != 0)
-                filteredDictionary = _clientStorage.dictionaryClient.Where(p => p.Key.PasportNum == clientFilter.PasportNum).ToDictionary(k => k.Key, k => k.Value);
+                filteredDictionary = _clientStorage._dictionaryClient.Where(p => p.Key.PasportNum == clientFilter.PasportNum).ToDictionary(k => k.Key, k => k.Value);
 
             if (clientFilter.BirtDate != new DateTime())
-                filteredDictionary = _clientStorage.dictionaryClient.Where(p => p.Key.BirtDate.Date == clientFilter.BirtDate.Date).ToDictionary(k => k.Key, k => k.Value);
+                filteredDictionary = _clientStorage._dictionaryClient.Where(p => p.Key.BirtDate.Date == clientFilter.BirtDate.Date).ToDictionary(k => k.Key, k => k.Value);
 
             return filteredDictionary;
         }
