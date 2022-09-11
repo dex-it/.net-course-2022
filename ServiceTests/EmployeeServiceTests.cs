@@ -24,8 +24,8 @@ namespace ServiceTests
             var employeeService = new EmployeeService(employeeStorage);
 
             //Act
-            var youngClient = employeeStorage._listEmployees.Min(p => p.BirtDate);
-            var oldClient = employeeStorage._listEmployees.Max(p => p.BirtDate);
+            var oldClient = employeeStorage._listEmployees.Min(p => p.BirtDate);
+            var youngClient = employeeStorage._listEmployees.Max(p => p.BirtDate);
             var averageAge = employeeStorage._listEmployees.Average(p => DateTime.Now.Year - p.BirtDate.Year);
 
             //Assert

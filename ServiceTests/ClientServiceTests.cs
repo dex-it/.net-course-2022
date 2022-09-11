@@ -29,8 +29,8 @@ namespace ServiceTests
             var clientService = new ClientService(clientStorage);
 
            //Act
-            var youngClient = clientStorage._dictionaryClient.Min(p => p.Key.BirtDate);
-            var oldClient = clientStorage._dictionaryClient.Max(p => p.Key.BirtDate);
+            var oldClient = clientStorage._dictionaryClient.Min(p => p.Key.BirtDate);
+            var youngClient = clientStorage._dictionaryClient.Max(p => p.Key.BirtDate);
             var averageAge = clientStorage._dictionaryClient.Average(p => DateTime.Now.Year - p.Key.BirtDate.Year);
 
             //Assert
