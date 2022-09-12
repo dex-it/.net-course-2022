@@ -1,4 +1,4 @@
-﻿namespace Services.Exceptions;
+namespace Services.Exceptions;
 
 public class AgeLimitException : Exception
 {
