@@ -4,7 +4,7 @@ namespace Services;
 
 public class ClientStorage
 {
-    public readonly Dictionary<Client, List<Account>> ClientsDictionary = new Dictionary<Client, List<Account>>();
+    public readonly Dictionary<Client, Account> ClientsDictionary = new Dictionary<Client, Account>();
 
     public void AddClient(Client client)
     {
@@ -13,29 +13,19 @@ public class ClientStorage
             Code = 840,
             Name = "USD"
         };
-        var eurCurrency = new Currency
+        var accounts = new Account
         {
-            Code = 978,
-            Name = "EUR"
-        };
-        var accounts = new List<Account>
-        {
-            new Account
-            {
-                Amount = 1000F,
-                Currency = usdCurrency
-            },
-            new Account
-            {
-                Amount = 200F,
-                Currency = eurCurrency
-            }
+            Amount = 1000F,
+            Currency = usdCurrency
         };
         ClientsDictionary.Add(client, accounts);
     }
     
-    public void AddClient(Client client, List<Account> accounts)
+    public void AddAccount(Client client, Account account)
     {
-        ClientsDictionary.Add(client, accounts);
+        if (!ClientsDictionary.TryAdd(client, account))
+        {
+            ClientsDictionary[client] = account;
+        }
     }
 }

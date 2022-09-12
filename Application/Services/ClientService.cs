@@ -27,12 +27,22 @@ public class ClientService
         _clientStorage.AddClient(client);
     }
     
-    public void AddClient(Client client, List<Account> accounts)
+    public void AddAccount(Client client, Account account)
     {
-        _clientStorage.AddClient(client, accounts);
+        if (client.BirthdayDate > DateTime.Now.AddYears(-18))
+        {
+            throw new AgeLimitException("Клиент моложе 18 лет");
+        }
+        
+        if (client.Passport == 0)
+        {
+            throw new PassportDataEmptyException("У клиента нет паспортных данных");
+        }
+        
+        _clientStorage.AddAccount(client, account);
     }
     
-    public Dictionary<Client, List<Account>> GetClients(ClientFilter clientFilter)
+    public Dictionary<Client, Account> GetClients(ClientFilter clientFilter)
     {
         if (clientFilter.DateEnd == DateTime.MinValue)
         {
