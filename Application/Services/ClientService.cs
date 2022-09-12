@@ -29,20 +29,15 @@ public class ClientService
     
     public void AddAccount(Client client, Account account)
     {
-        if (client.BirthdayDate > DateTime.Now.AddYears(-18))
+        if (_clientStorage.ClientsDictionary.ContainsKey(client))
         {
-            throw new AgeLimitException("Клиент моложе 18 лет");
+            throw new ClientNotExistException("Клиент не существует");
         }
-        
-        if (client.Passport == 0)
-        {
-            throw new PassportDataEmptyException("У клиента нет паспортных данных");
-        }
-        
+
         _clientStorage.AddAccount(client, account);
     }
     
-    public Dictionary<Client, Account> GetClients(ClientFilter clientFilter)
+    public Dictionary<Client, List<Account>> GetClients(ClientFilter clientFilter)
     {
         if (clientFilter.DateEnd == DateTime.MinValue)
         {
