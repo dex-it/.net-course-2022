@@ -64,17 +64,17 @@ namespace ServiceTests
             }
             
             var maxYoungClientDate = clientService.GetClients(clientFilter)
-                .Max(c => c.BirthdayDate);
+                .Max(c => c.Key.BirthdayDate);
             var maxYoungClient = clientService.GetClients(clientFilter)
-                .FirstOrDefault(c => c.BirthdayDate.Equals(maxYoungClientDate));
+                .FirstOrDefault(c => c.Key.BirthdayDate.Equals(maxYoungClientDate));
             
             var maxOldClientDate = clientService.GetClients(clientFilter)
-                .Min(c => c.BirthdayDate);
+                .Min(c => c.Key.BirthdayDate);
             var maxOldClient = clientService.GetClients(clientFilter)
-                .FirstOrDefault(c => c.BirthdayDate.Equals(maxOldClientDate));
+                .FirstOrDefault(c => c.Key.BirthdayDate.Equals(maxOldClientDate));
 
             var averageAgeClients = clientService.GetClients(clientFilter)
-                    .Average(c => (DateTime.Now.Year - c.BirthdayDate.Year));
+                    .Average(c => (DateTime.Now.Year - c.Key.BirthdayDate.Year));
             
             // Assert
             if (averageAgeClients > 18) Assert.True(true);

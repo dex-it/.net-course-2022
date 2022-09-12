@@ -27,29 +27,34 @@ public class ClientService
         _clientStorage.AddClient(client);
     }
     
-    public List<Client> GetClients(ClientFilter clientFilter)
+    public void AddClient(Client client, List<Account> accounts)
+    {
+        _clientStorage.AddClient(client, accounts);
+    }
+    
+    public Dictionary<Client, List<Account>> GetClients(ClientFilter clientFilter)
     {
         if (clientFilter.DateEnd == DateTime.MinValue)
         {
             clientFilter.DateEnd = DateTime.Today;
         }
         
-        var selection = _clientStorage.Clients.
-            Where(c => c.BirthdayDate >= clientFilter.DateStart).
-            Where(c => c.BirthdayDate <= clientFilter.DateEnd);
+        var selection = _clientStorage.ClientsDictionary.
+            Where(c => c.Key.BirthdayDate >= clientFilter.DateStart).
+            Where(c => c.Key.BirthdayDate <= clientFilter.DateEnd);
 
         if (!string.IsNullOrEmpty(clientFilter.FirstName))
-            selection = selection.Where(c => c.FirstName == clientFilter.FirstName);
+            selection = selection.Where(c => c.Key.FirstName == clientFilter.FirstName);
         
         if (!string.IsNullOrEmpty(clientFilter.LastName))
-            selection = selection.Where(c => c.LastName == clientFilter.LastName);
+            selection = selection.Where(c => c.Key.LastName == clientFilter.LastName);
 
         if (clientFilter.Passport != 0)
-            selection = selection.Where(c => c.Passport == clientFilter.Passport);
+            selection = selection.Where(c => c.Key.Passport == clientFilter.Passport);
         
         if (clientFilter.PhoneNumber != 0)
-            selection = selection.Where(c => c.PhoneNumber == clientFilter.PhoneNumber);
+            selection = selection.Where(c => c.Key.PhoneNumber == clientFilter.PhoneNumber);
         
-        return selection.ToList();
+        return selection.ToDictionary(c => c.Key, a => a.Value );
     }
 }
