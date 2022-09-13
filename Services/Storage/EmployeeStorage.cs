@@ -1,7 +1,7 @@
 ﻿using Models;
 using Services.Exceptions;
 
-namespace Services
+namespace Services.Storage
 {
     public class EmployeeStorage
     {

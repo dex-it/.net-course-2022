@@ -1,17 +1,18 @@
 ﻿using Services.Filters;
 using Models;
 using Services.Exceptions;
+using Services.Storage;
 
 namespace Services
 {
     public class ClientService
     {
 
-        private ClientStorage _clientStorage { get; set; }
+        private IClientStorage _iClientStorage { get; set; }
 
-        public ClientService(ClientStorage clientStorage)
+        public ClientService(IClientStorage iClientStorage)
         {
-            _clientStorage = clientStorage;
+            _iClientStorage = iClientStorage;
         }
 
         public void AddClient(Client client)
@@ -25,27 +26,27 @@ namespace Services
             {
                 throw new Under18Exception("Клиент меньше 18 лет");
             }
-            _clientStorage.AddClient(client);
+            _iClientStorage.Add(client);
         }
 
-        public Dictionary<Client, List<Account>> GetClients(ClientFilter clientFilter)
+        public Dictionary<Client, Account> GetClients(ClientFilter clientFilter)
         {
-            var selection = _clientStorage._dictionaryClient.Select(p => p);
+            var selection = _iClientStorage.Data.Select(p => p);
 
             if (clientFilter.Name != null)
-                selection = _clientStorage._dictionaryClient.
+                selection = selection.
                     Where(p => p.Key.Name == clientFilter.Name);
 
             if (clientFilter.PasportNum != 0)
-                selection = _clientStorage._dictionaryClient.
+                selection = selection.
                     Where(p => p.Key.PasportNum == clientFilter.PasportNum);
 
             if (clientFilter.StartDate != new DateTime())
-                selection = _clientStorage._dictionaryClient.
+                selection = selection.
                     Where(p => p.Key.BirtDate == clientFilter.StartDate);
 
             if (clientFilter.EndDate != new DateTime())
-                selection = _clientStorage._dictionaryClient.
+                selection = selection.
                     Where(p => p.Key.BirtDate == clientFilter.EndDate);
 
             return selection.ToDictionary(k => k.Key, k => k.Value);
