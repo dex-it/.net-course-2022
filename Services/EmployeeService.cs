@@ -3,6 +3,7 @@ using Services.Exceptions;
 using Services.Filters;
 using Services.Storage;
 
+
 namespace Services
 {
     public class EmployeeService
@@ -52,6 +53,7 @@ namespace Services
                     Where(p => p.PasportNum == employeeFilter.PasportNum).ToList();
 
             return filterList;
+
         }
     }
 }

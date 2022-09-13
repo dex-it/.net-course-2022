@@ -3,6 +3,7 @@ using Models;
 using Services.Exceptions;
 using Services.Storage;
 
+
 namespace Services
 {
     public class ClientService
@@ -21,7 +22,6 @@ namespace Services
             {
                 throw new NoPasportData("У клиента нет паспортных данных");
             }
-
             if (DateTime.Now.Year - client.BirtDate.Year < 18)
             {
                 throw new Under18Exception("Клиент меньше 18 лет");

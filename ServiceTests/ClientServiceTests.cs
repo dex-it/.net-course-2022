@@ -14,6 +14,7 @@ namespace ServiceTests
     public class ClientServiceTests
     {
         [Fact]
+
         public void GetClientsFilterTest()
         {
             // Arrange
@@ -38,11 +39,12 @@ namespace ServiceTests
             {
                 Assert.True(true);
             }
-            else
+            else       
             {
                 Assert.True(false);
             }
         }
+
 
         //[Fact]
         //public void AddClientLimit18YearsExceptionTest()
