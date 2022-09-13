@@ -4,7 +4,6 @@ namespace Services
 {
     public class BankService
     {
-        
         public int SalaryOwnerOfBank(int bankProfit, int expenses, int owners)
         {
             return (int)((bankProfit - expenses) / owners);
@@ -18,6 +17,21 @@ namespace Services
                 PasportNum = client.PasportNum,
                 Salary = 0
             };
+        }
+
+        public List<Person> BlackList = new List<Person>();
+        public void AddBonus<T>(T person) where T : Person
+        {
+            person.Bonus+=50;
+        }
+        public void AddToBlackList<T>(T person) where T : Person
+        {
+            if (!BlackList.Contains(person))
+                BlackList.Add(person);
+        }
+        public bool PersonInBlackList<T>(T person) where T : Person
+        {
+            return BlackList.Contains(person);
         }
     }
 }
