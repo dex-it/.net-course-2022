@@ -26,12 +26,15 @@ namespace Services
         }
         public void AddToBlackList<T>(T person) where T : Person
         {
-            if (!blackList.Contains(person))
-                blackList.Add(person);
+            if (blackList.FirstOrDefault(p => p.PasportNum == person.PasportNum)!=null)
+            blackList.Add(person);
         }
         public bool PersonInBlackList<T>(T person) where T : Person
         {
-            return blackList.Contains(person);
+            if (blackList.FirstOrDefault(p => p.PasportNum == person.PasportNum) == null)
+                return false;
+
+            return true;
         }
     }
 }
