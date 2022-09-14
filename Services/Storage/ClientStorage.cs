@@ -58,7 +58,17 @@ namespace Services.Storage
 
         public void Update(Client item)
         {
-            throw new NotImplementedException();
+            var oldClient = Data.Keys.First(p => p.PasportNum == item.PasportNum);
+
+            item = new Client
+            {
+                Name = oldClient.Name,
+                PasportNum = oldClient.PasportNum,
+                BirtDate = oldClient.BirtDate
+            };
+
+            Remove(oldClient);
+            Add(item);
         }
 
         public void UpdateAccount(Client client, Account account)
