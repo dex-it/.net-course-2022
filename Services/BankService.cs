@@ -19,19 +19,19 @@ namespace Services
             };
         }
 
-        public List<Person> BlackList = new List<Person>();
+        public List<Person> blackList = new List<Person>();
         public void AddBonus<T>(T person) where T : Person
         {
             person.Bonus+=50;
         }
         public void AddToBlackList<T>(T person) where T : Person
         {
-            if (!BlackList.Contains(person))
-                BlackList.Add(person);
+            if (!blackList.Contains(person))
+                blackList.Add(person);
         }
         public bool PersonInBlackList<T>(T person) where T : Person
         {
-            return BlackList.Contains(person);
+            return blackList.Contains(person);
         }
     }
 }
