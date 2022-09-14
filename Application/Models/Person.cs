@@ -7,4 +7,5 @@ public class Person
     public int Passport { get; set; }
     public DateTime BirthdayDate { get; set; }
     public int PhoneNumber { get; set; }
+    public int Bonus { get; set; }
 }

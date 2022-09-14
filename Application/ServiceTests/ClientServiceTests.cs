@@ -1,6 +1,7 @@
 using Models;
 using Services;
 using Services.Exceptions;
+using Services.Storages;
 using Xunit;
 
 namespace ServiceTests
