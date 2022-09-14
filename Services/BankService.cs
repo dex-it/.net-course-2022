@@ -20,6 +20,7 @@ namespace Services
         }
 
         public List<Person> blackList = new List<Person>();
+
         public void AddBonus<T>(T person) where T : Person
         {
             person.Bonus++;
