@@ -12,7 +12,7 @@ namespace Services.Storage
         public void AddAccount(Client client, Account account);
         public void RemoveAccount(Client client, Account account);
         public void UpdateAccount(Client client, Account account);
-        public Dictionary<Client, Account> Data { get; }
+        public Dictionary<Client, List<Account>> Data { get; }
 
     }
 }

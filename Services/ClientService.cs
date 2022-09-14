@@ -29,7 +29,7 @@ namespace Services
             _iClientStorage.Add(client);
         }
 
-        public Dictionary<Client, Account> GetClients(ClientFilter clientFilter)
+        public Dictionary<Client, List<Account>> GetClients(ClientFilter clientFilter)
         {
             var selection = _iClientStorage.Data.Select(p => p);
 
@@ -58,16 +58,7 @@ namespace Services
             {
                 throw new ExistsException("Такого клиента нет");
             }
-            Account newAccount = new Account
-            {
-                Currency = new Currency
-                {
-                    Code = 4,
-                    Name = "RUB",
-                },
-                Amount = 0
-            };
-            if (_iClientStorage.Data[client].)//исправить
+            if (_iClientStorage.Data[client].FirstOrDefault(p => p.Currency.Name == account.Currency.Name) != null)
             {
                 throw new ExistsException("У клиента уже есть такой счет");
             }

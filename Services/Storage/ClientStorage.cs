@@ -10,13 +10,12 @@ namespace Services.Storage
 {
     public class ClientStorage : IClientStorage
     {
-        public Dictionary<Client, Account> Data
-        { get => throw new NotImplementedException(); }
+        public Dictionary<Client, List<Account>> Data = new Dictionary<Client, List<Account>>();
 
+        Dictionary<Client, List<Account>> IClientStorage.Data => throw new NotImplementedException();
 
         public void Add(Client client)
         {
-            var Data = new Dictionary<Client, List<Account>>();
             Data.Add(
                 client,
                 new List<Account>
@@ -35,7 +34,6 @@ namespace Services.Storage
 
         public void AddAccount(Client client, Account account)
         {
-            var Data = new Dictionary<Client, List<Account>>();
             Account newAccount = new Account
             {
                 Currency = new Currency
