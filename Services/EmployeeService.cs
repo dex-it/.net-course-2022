@@ -29,29 +29,29 @@ namespace Services
         }
         public List<Employee> GetEmployees(EmployeeFilters employeeFilter)
         {
-            List<Employee> filterList = new List<Employee>();
+            var selection = _iEmployeeStorage.Data.Select(p => p);
 
             if (employeeFilter.Name != null)
-                filterList = _iEmployeeStorage.Data.
-                    Where(p => p.Name == employeeFilter.Name).ToList();
+                selection = selection.
+                    Where(p => p.Name == employeeFilter.Name);
 
             if (employeeFilter.PasportNum != 0)
-                filterList = _iEmployeeStorage.Data.
-                    Where(p => p.PasportNum == employeeFilter.PasportNum).ToList();
+                selection = selection.
+                   Where(p => p.PasportNum == employeeFilter.PasportNum);
 
             if (employeeFilter.StartDate != new DateTime())
-                filterList = _iEmployeeStorage.Data.
-                    Where(p => p.BirtDate == employeeFilter.StartDate).ToList();
+                selection = selection.
+                   Where(p => p.BirtDate == employeeFilter.StartDate);
 
             if (employeeFilter.EndDate != new DateTime())
-                filterList = _iEmployeeStorage.Data.
-                    Where(p => p.BirtDate == employeeFilter.EndDate).ToList();
+                selection = selection.
+                   Where(p => p.BirtDate == employeeFilter.EndDate);
 
             if (employeeFilter.Salary != 0)
-                filterList = _iEmployeeStorage.Data.
-                    Where(p => p.PasportNum == employeeFilter.PasportNum).ToList();
+                selection = selection.
+                   Where(p => p.PasportNum == employeeFilter.PasportNum);
 
-            return filterList;
+            return selection.ToList();
         }
     }
 }
