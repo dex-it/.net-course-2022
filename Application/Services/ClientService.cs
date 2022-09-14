@@ -1,13 +1,14 @@
 using Services.Exceptions;
 using Models;
+using Services.Storages;
 
 namespace Services;
 
 public class ClientService
 {
-    private ClientStorage _clientStorage;
+    private IClientStorage _clientStorage;
 
-    public ClientService(ClientStorage clientStorage)
+    public ClientService(IClientStorage clientStorage)
     {
         _clientStorage = clientStorage;
     }
@@ -24,12 +25,12 @@ public class ClientService
             throw new PassportDataEmptyException("У клиента нет паспортных данных");
         }
 
-        _clientStorage.AddClient(client);
+        _clientStorage.Add(client);
     }
     
     public void AddAccount(Client client, Account account)
     {
-        if (_clientStorage.ClientsDictionary.ContainsKey(client))
+        if (_clientStorage.Data.ContainsKey(client))
         {
             throw new ClientNotExistException("Клиент не существует");
         }
@@ -44,7 +45,7 @@ public class ClientService
             clientFilter.DateEnd = DateTime.Today;
         }
         
-        var selection = _clientStorage.ClientsDictionary.
+        var selection = _clientStorage.Data.
             Where(c => c.Key.BirthdayDate >= clientFilter.DateStart).
             Where(c => c.Key.BirthdayDate <= clientFilter.DateEnd);
 

@@ -1,13 +1,14 @@
 using Services.Exceptions;
 using Models;
+using Services.Storages;
 
 namespace Services;
 
 public class EmployeeService
 {
-    private EmployeeStorage _employeeStorage;
+    private IEmployeeStorage _employeeStorage;
 
-    public EmployeeService(EmployeeStorage employeeStorage)
+    public EmployeeService(IEmployeeStorage employeeStorage)
     {
         _employeeStorage = employeeStorage;
     }
@@ -24,7 +25,7 @@ public class EmployeeService
             throw new PassportDataEmptyException("У сотрудника нет паспортных данных");
         }
 
-        _employeeStorage.AddEmployee(employee);
+        _employeeStorage.Add(employee);
     }
     
     public List<Employee> GetEmployees(EmployeeFilter employeeFilter)
@@ -34,7 +35,7 @@ public class EmployeeService
             employeeFilter.DateEnd = DateTime.Today;
         }
         
-        var selection = _employeeStorage.Employees.
+        var selection = _employeeStorage.Data.
             Where(c => c.BirthdayDate >= employeeFilter.DateStart).
             Where(c => c.BirthdayDate <= employeeFilter.DateEnd);
 
