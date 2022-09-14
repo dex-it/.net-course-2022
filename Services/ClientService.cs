@@ -64,5 +64,30 @@ namespace Services
             }
             _iClientStorage.AddAccount(client,account);
         }
+        public void UpdateClient(Client client)
+        {
+            if (!_iClientStorage.Data.ContainsKey(client))
+            {
+                throw new ExistsException("Такого клиента нет");
+            }
+
+            _iClientStorage.Update(client);
+
+        }
+        public void UpdateAccount(Client client, Account account)
+        {
+            if (!_iClientStorage.Data.ContainsKey(client))
+            {
+                throw new ExistsException("Такого клиента нет");
+            }
+
+            if (_iClientStorage.Data[client].FirstOrDefault(p => p.Currency.Name == account.Currency.Name) == null)
+            {
+                throw new ExistsException("У клиента нет такого счета");
+            }
+
+            _iClientStorage.UpdateAccount(client, account);
+
+        }
     }
 }

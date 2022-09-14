@@ -73,7 +73,17 @@ namespace Services.Storage
 
         public void UpdateAccount(Client client, Account account)
         {
-            throw new NotImplementedException();
+            int accountUpdate = Data[client].IndexOf(Data[client].First((p => p.Currency.Name == account.Currency.Name)));
+
+            Data[client][accountUpdate] = new Account
+            {
+                Currency = new Currency
+                {
+                    Code = account.Currency.Code,
+                    Name = account.Currency.Name,
+                },
+                Amount = account.Amount
+            };
         }
     }
 }
