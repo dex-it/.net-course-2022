@@ -10,9 +10,7 @@ namespace Services.Storage
 {
     public class ClientStorage : IClientStorage
     {
-        public Dictionary<Client, List<Account>> Data = new Dictionary<Client, List<Account>>();
-
-        Dictionary<Client, List<Account>> IClientStorage.Data => throw new NotImplementedException();
+        public Dictionary<Client, List<Account>> Data { get; }
 
         public void Add(Client client)
         {
@@ -59,31 +57,17 @@ namespace Services.Storage
         public void Update(Client item)
         {
             var oldClient = Data.Keys.First(p => p.PasportNum == item.PasportNum);
-
-            item = new Client
-            {
-                Name = oldClient.Name,
-                PasportNum = oldClient.PasportNum,
-                BirtDate = oldClient.BirtDate
-            };
-
-            Remove(oldClient);
-            Add(item);
+            oldClient.Name = item.Name;
+            oldClient.PasportNum = item.PasportNum;
+            oldClient.BirtDate = item.BirtDate;
         }
 
         public void UpdateAccount(Client client, Account account)
-        {
-            int accountUpdate = Data[client].IndexOf(Data[client].First((p => p.Currency.Name == account.Currency.Name)));
-
-            Data[client][accountUpdate] = new Account
-            {
-                Currency = new Currency
-                {
-                    Code = account.Currency.Code,
-                    Name = account.Currency.Name,
-                },
-                Amount = account.Amount
-            };
+        {            
+            var oldAccount = Data[client].FirstOrDefault(p => p.Currency.Name == account.Currency.Name);
+            oldAccount.Currency.Name = account.Currency.Name;
+            oldAccount.Currency.Code = account.Currency.Code;
+            oldAccount.Amount = account.Amount;
         }
     }
 }
