@@ -7,6 +7,7 @@ using Xunit;
 using Services;
 using Models;
 using Services.Exceptions;
+using Services.Storage;
 
 namespace ServiceTests
 {
@@ -15,7 +16,7 @@ namespace ServiceTests
         [Fact]
         public void AddEmployeeLimit18YearsExceptionTest()
         {
-            var employeeService = new EmployeeService();
+            var employeeService = new EmployeeService(new EmployeeStorage());
             var ivan = new Employee
             {
                 Name = "Ivan",
@@ -39,7 +40,7 @@ namespace ServiceTests
         [Fact]
         public void AddEmployeeNoPasportDataExceptionTest()
         {
-            var employeeService = new EmployeeService();
+            var employeeService = new EmployeeService(new EmployeeStorage());
             var ivan = new Employee
             {
                 Name = "Ivan",
