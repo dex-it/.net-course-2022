@@ -1,22 +1,42 @@
 ﻿using Models;
-using Services;
 public class Program
 {
     static void Main()
     {
-        var bankService = new BankService();
-        Console.WriteLine($"Расчет ЗП владельцев банка: {bankService.SalaryOwnerOfBank(50000, 30000, 2)}");
-        var client = new Client
+        var employee = new Employee
         {
             Name = "Alex",
             BirtDate = new DateTime(1999, 01, 01),
             PasportNum = 372462
         };
-        var employee = new Employee();
-        employee = bankService.ClientInEmployee(client);
-        Console.WriteLine($"Перевод клиента в работника" + 
-            $"\nИмя: {employee.Name} Дата рождения: {employee.BirtDate} Номер паспорта:{employee.PasportNum}" +
-            $"Зарплата: {employee.Salary}");
+        BadGetSampleContract(employee);
+        Console.WriteLine(employee.Contract);
+        employee.Contract = GetSampleContract(employee.Name, employee.BirtDate, employee.PasportNum);
+        Console.WriteLine(employee.Contract);
+        var currency = new Currency
+        {
+            Name = "Euro"
+        };
+        BadGetSampleCurrency(currency);
+        Console.WriteLine($"Валюта: {currency.Name}");
+        currency.Name = GetSampleCurrency(currency.Name);
+        Console.WriteLine(currency.Name);
+    }
+    static void BadGetSampleContract(Employee employee)
+    {
+        employee.Contract = $"Имя:  {employee.Name} Дата рождения: {employee.BirtDate} Номер паспорта:{employee.PasportNum} ";
 
+    }
+    static string GetSampleContract(string name, DateTime date, int pasportNum)
+    {
+        return $"Имя: {name} Дата рождения: {date} Номер паспорта:{pasportNum} ";
+    }
+    static void BadGetSampleCurrency(Currency currency)
+    {
+        currency.Name = currency.Name;
+    }
+    static string GetSampleCurrency(string name)
+    {
+        return $"Валюта: {name}";
     }
 }
