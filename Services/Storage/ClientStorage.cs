@@ -32,16 +32,7 @@ namespace Services.Storage
 
         public void AddAccount(Client client, Account account)
         {
-            Account newAccount = new Account
-            {
-                Currency = new Currency
-                {
-                    Code = 4,
-                    Name = "RUB",
-                },
-                Amount = 0
-            };
-            Data[client].Add(newAccount);
+            Data[client].Add(account);
         }
 
         public void Remove(Client item)
