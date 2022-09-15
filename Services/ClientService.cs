@@ -1,8 +1,7 @@
-﻿using Services.Filters;
 using Models;
 using Services.Exceptions;
+using Services.Filters;
 using Services.Storage;
-
 
 namespace Services
 {
@@ -22,6 +21,7 @@ namespace Services
             {
                 throw new NoPasportData("У клиента нет паспортных данных");
             }
+
             if (DateTime.Now.Year - client.BirtDate.Year < 18)
             {
                 throw new Under18Exception("Клиент меньше 18 лет");
@@ -29,7 +29,7 @@ namespace Services
             _iClientStorage.Add(client);
         }
 
-        public Dictionary<Client, Account> GetClients(ClientFilter clientFilter)
+        public Dictionary<Client, List<Account>> GetClients(ClientFilter clientFilter)
         {
             var selection = _iClientStorage.Data.Select(p => p);
 
@@ -52,27 +52,42 @@ namespace Services
             return selection.ToDictionary(k => k.Key, k => k.Value);
         }
 
+        public void AddAccount(Client client, Account account)
+        {
+            if (!_iClientStorage.Data.ContainsKey(client))
+            {
+                throw new ExistsException("Такого клиента нет");
+            }
+            if (_iClientStorage.Data[client].FirstOrDefault(p => p.Currency.Name == account.Currency.Name) != null)
+            {
+                throw new ExistsException("У клиента уже есть такой счет");
+            }
+            _iClientStorage.AddAccount(client,account);
+        }
+        public void UpdateClient(Client client)
+        {
+            if (!_iClientStorage.Data.ContainsKey(client))
+            {
+                throw new ExistsException("Такого клиента нет");
+            }
 
-        //public void AddAccount(Client client)
-        //{
-        //    if (!dictionaryClient.ContainsKey(client))
-        //    {
-        //        throw new ExistsException("Такого клиента нет");
-        //    }
-        //    Account newAccount = new Account
-        //    {
-        //        Currency = new Currency
-        //        {
-        //            Code = 4,
-        //            Name = "RUB",
-        //        },
-        //        Amount = 0
-        //    };
-        //    if (dictionaryClient[client].FirstOrDefault(p => p.Currency.Name == newAccount.Currency.Name) != null)
-        //    {
-        //        throw new ExistsException("У клиента уже есть такой счет");
-        //    }
-        //    dictionaryClient[client].Add(newAccount);
-        //}
+            _iClientStorage.Update(client);
+
+        }
+        public void UpdateAccount(Client client, Account account)
+        {
+            if (!_iClientStorage.Data.ContainsKey(client))
+            {
+                throw new ExistsException("Такого клиента нет");
+            }
+
+            if (_iClientStorage.Data[client].FirstOrDefault(p => p.Currency.Name == account.Currency.Name) == null)
+            {
+                throw new ExistsException("У клиента нет такого счета");
+            }
+
+            _iClientStorage.UpdateAccount(client, account);
+
+        }
     }
 }

@@ -1,17 +1,19 @@
-﻿using Models;
-using Services.Exceptions;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Models;
+using Services.Exceptions;
 
 namespace Services.Storage
 {
     public class ClientStorage : IClientStorage
     {
-        public Dictionary<Client, Account> Data 
-        { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        
+        public Dictionary<Client, List<Account>> Data { get; }
+
         public void Add(Client client)
         {
-            var Data = new Dictionary<Client, List<Account>>();
             Data.Add(
                 client,
                 new List<Account>
@@ -30,7 +32,7 @@ namespace Services.Storage
 
         public void AddAccount(Client client, Account account)
         {
-            throw new NotImplementedException();
+            Data[client].Add(account);
         }
 
         public void Remove(Client item)
@@ -45,12 +47,18 @@ namespace Services.Storage
 
         public void Update(Client item)
         {
-            throw new NotImplementedException();
+            var oldClient = Data.Keys.First(p => p.PasportNum == item.PasportNum);
+            oldClient.Name = item.Name;
+            oldClient.PasportNum = item.PasportNum;
+            oldClient.BirtDate = item.BirtDate;
         }
 
         public void UpdateAccount(Client client, Account account)
-        {
-            throw new NotImplementedException();
+        {            
+            var oldAccount = Data[client].FirstOrDefault(p => p.Currency.Name == account.Currency.Name);
+            oldAccount.Currency.Name = account.Currency.Name;
+            oldAccount.Currency.Code = account.Currency.Code;
+            oldAccount.Amount = account.Amount;
         }
     }
 }

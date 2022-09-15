@@ -1,6 +1,5 @@
-﻿using Services;
+using Services;
 using Models;
-using Services.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,152 +7,136 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Services.Exceptions;
+using Services.Storage;
 
 namespace ServiceTests
 {
     public class ClientServiceTests
     {
         [Fact]
-
-        public void GetClientsFilterTest()
+        public void AddClientLimit18YearsExceptionTest()
         {
-            // Arrange
-            var clientFilter = new ClientFilter();
-            var clientStorage = new ClientStorage();
-            var testDataGenerator = new TestDataGenerator();
-            
-
-            for (int i = 0; i < 5; i++)
+            var clientService = new ClientService(new ClientStorage());
+            var ivan = new Client
             {
-                clientStorage.AddClient(testDataGenerator.GetFakeDataClient().Generate());
-            }
-            var clientService = new ClientService(clientStorage);
-
-           //Act
-            var oldClient = clientStorage._dictionaryClient.Min(p => p.Key.BirtDate);
-            var youngClient = clientStorage._dictionaryClient.Max(p => p.Key.BirtDate);
-            var averageAge = clientStorage._dictionaryClient.Average(p => DateTime.Now.Year - p.Key.BirtDate.Year);
-
-            //Assert
-            if (averageAge > 18)
+                Name = "Ivan",
+                BirtDate = new DateTime(2006, 01, 01),
+                PasportNum = 324763
+            };
+            try
             {
-                Assert.True(true);
+                clientService.AddClient(ivan);
             }
-            else       
+            catch (Under18Exception e)
+            {
+                Assert.Equal("Клиенту меньше 18", e.Message);
+                Assert.Equal(typeof(Under18Exception), e.GetType());
+            }
+            catch (Exception e)
             {
                 Assert.True(false);
             }
         }
+        [Fact]
+        public void AddClientNoPasportDataExceptionTest()
+        {
+            var clientService = new ClientService(new ClientStorage());
+            var ivan = new Client
+            {
+                Name = "Ivan",
+                BirtDate = new DateTime(2006, 01, 01),
+                PasportNum = 324763
+            };
+            try
+            {
+                clientService.AddClient(ivan);
+            }
+            catch (NoPasportData e)
+            {
+                Assert.Equal("У клиента нет паспортных данных", e.Message);
+                Assert.Equal(typeof(NoPasportData), e.GetType());
+            }
+            catch (Exception e)
+            {
+                Assert.True(false);
+            }
+        }
+        [Fact]
+        public void AddClientExistsException()
+        {
+            var clientService = new ClientService(new ClientStorage());
+            var ivan = new Client
+            {
+                Name = "Ivan",
+                BirtDate = new DateTime(2006, 01, 01),
+                PasportNum = 324763
+            };
+            var ivanI = new Client
+            {
+                Name = "Ivan",
+                BirtDate = new DateTime(2006, 01, 01),
+                PasportNum = 324763
+            };
+            try
+            {
+                clientService.AddClient(ivan);
+                clientService.AddClient(ivanI);
 
+            }
+            catch (ExistsException e)
+            {
+                Assert.Equal("Такой клиент существует", e.Message);
+                Assert.Equal(typeof(ExistsException), e.GetType());
+            }
+            catch (Exception e)
+            {
+                Assert.True(false);
+            }
+        }
+        public void AddNewAccount_NoExistsClient_And_AccountAlreadyExistsExceptionTest()
+        {
+            // Arrange
+            var clientStorage = new ClientStorage();
+            var clientService = new ClientService(clientStorage);
 
-        //[Fact]
-        //public void AddClientLimit18YearsExceptionTest()
-        //{
-        //    var clientService = new ClientService();
-        //    var ivan = new Client
-        //    {
-        //        Name = "Ivan",
-        //        BirtDate = new DateTime(2006, 01, 01),
-        //        PasportNum = 324763
-        //    };
-        //    try
-        //    {
-        //        clientService.AddClient(ivan);
-        //    }
-        //    catch (Under18Exception e)
-        //    {
-        //        Assert.Equal("Клиенту меньше 18", e.Message);
-        //        Assert.Equal(typeof(Under18Exception), e.GetType());
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Assert.True(false);
-        //    }
-        //}
-        //[Fact]
-        //public void AddClientNoPasportDataExceptionTest()
-        //{
-        //    var clientService = new ClientService();
-        //    var ivan = new Client
-        //    {
-        //        Name = "Ivan",
-        //        BirtDate = new DateTime(2006, 01, 01),
-        //        PasportNum = 324763
-        //    };
-        //    try
-        //    {
-        //        clientService.AddClient(ivan);
-        //    }
-        //    catch (NoPasportData e)
-        //    {
-        //        Assert.Equal("У клиента нет паспортных данных", e.Message);
-        //        Assert.Equal(typeof(NoPasportData), e.GetType());
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Assert.True(false);
-        //    }
-        //}
-        //[Fact]
-        //public void AddClientExistsException()
-        //{
-        //    var clientService = new ClientService();
-        //    var ivan = new Client
-        //    {
-        //        Name = "Ivan",
-        //        BirtDate = new DateTime(2006, 01, 01),
-        //        PasportNum = 324763
-        //    };
-        //    var ivanI = new Client
-        //    {
-        //        Name = "Ivan",
-        //        BirtDate = new DateTime(2006, 01, 01),
-        //        PasportNum = 324763
-        //    };
-        //    try
-        //    {
-        //        clientService.AddClient(ivan);
-        //        clientService.AddClient(ivanI);
+            var ivan = new Client
+            {
+                Name = "Ivan",
+                BirtDate = new DateTime(2006, 01, 01),
+                PasportNum = 324763
+            };
+            var ivanI = new Client
+            {
+                Name = "Ivan",
+                BirtDate = new DateTime(2006, 01, 01),
+                PasportNum = 324763
+            };
+            Account newAccount = new Account
+            {
+                Currency = new Currency
+                {
+                    Code = 5,
+                    Name = "RUB",
+                },
+                Amount = 0
+            };
 
-        //    }
-        //    catch (ExistsException e)
-        //    {
-        //        Assert.Equal("Такой клиент существует", e.Message);
-        //        Assert.Equal(typeof(ExistsException), e.GetType());
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Assert.True(false);
-        //    }
-        //}
-        //[Fact]
-        //public void AddAccountNoExistsClientAndAccountExistsExceptionTest()
-        //{
-        //    var clientService = new ClientService();
-        //    var ivan = new Client
-        //    {
-        //        Name = "Ivan",
-        //        BirtDate = new DateTime(2006, 01, 01),
-        //        PasportNum = 324763
-        //    };
-        //    var ivanEx = new Client
-        //    {
-        //        Name = "Ivan",
-        //        BirtDate = new DateTime(2006, 01, 01),
-        //        PasportNum = 324763
-        //    };
+            // Act/Assert
+            try
+            {
+                clientService.AddClient(ivan);
+                clientService.AddAccount(ivan, newAccount);
 
-        //    try
-        //    {
-        //        clientService.AddClient(ivan);
-        //        clientService.AddAccount(ivan);
-        //        Assert.Throws<ExistsException>(() => clientService.AddAccount(ivanEx));
-        //        Assert.Throws<ExistsException>(() => clientService.AddAccount(ivan));
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Assert.True(false);
-        //    }
-        //}
+                Assert.Throws<ExistsException>(() => clientService.AddAccount(ivanI, newAccount));
+                Assert.Throws<ExistsException>(() => clientService.AddAccount(ivan, newAccount));
+                Assert.Contains(newAccount, clientStorage.Data[ivan]);
+            }
+            catch (Exception e)
+            {
+                Assert.True(false);
+            }
+
+        }
+
     }
 }

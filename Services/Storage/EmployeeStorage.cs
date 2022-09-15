@@ -1,14 +1,30 @@
-﻿using Models;
-using Services.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Models;
 
 namespace Services.Storage
 {
-    public class EmployeeStorage
+    public class EmployeeStorage : IEmployeeStorage
     {
-        public readonly List<Employee> _listEmployees = new List<Employee>();
-        public void AddEmployee(Employee employee)
+        
+        public List<Employee> Data { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public void Add(Employee item)
         {
-            _listEmployees.Add(employee);
+            throw new NotImplementedException();
+        }
+
+        public void Remove(Employee item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Employee item)
+        {
+            throw new NotImplementedException();
         }
     }
 }
