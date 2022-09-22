@@ -1,4 +1,4 @@
-﻿using Services;
+using Services;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Services.Exceptions;
+using Services.Storage;
 
 namespace ServiceTests
 {
@@ -15,7 +16,7 @@ namespace ServiceTests
         [Fact]
         public void AddClientLimit18YearsExceptionTest()
         {
-            var clientService = new ClientService();
+            var clientService = new ClientService(new ClientStorage());
             var ivan = new Client
             {
                 Name = "Ivan",
@@ -39,7 +40,7 @@ namespace ServiceTests
         [Fact]
         public void AddClientNoPasportDataExceptionTest()
         {
-            var clientService = new ClientService();
+            var clientService = new ClientService(new ClientStorage());
             var ivan = new Client
             {
                 Name = "Ivan",
@@ -63,7 +64,7 @@ namespace ServiceTests
         [Fact]
         public void AddClientExistsException()
         {
-            var clientService = new ClientService();
+            var clientService = new ClientService(new ClientStorage());
             var ivan = new Client
             {
                 Name = "Ivan",
@@ -92,34 +93,50 @@ namespace ServiceTests
                 Assert.True(false);
             }
         }
-        [Fact]
-        public void AddAccountNoExistsClientAndAccountExistsExceptionTest()
+        public void AddNewAccount_NoExistsClient_And_AccountAlreadyExistsExceptionTest()
         {
-            var clientService = new ClientService();
+            // Arrange
+            var clientStorage = new ClientStorage();
+            var clientService = new ClientService(clientStorage);
+
             var ivan = new Client
             {
                 Name = "Ivan",
                 BirtDate = new DateTime(2006, 01, 01),
                 PasportNum = 324763
             };
-            var ivanEx = new Client
+            var ivanI = new Client
             {
                 Name = "Ivan",
                 BirtDate = new DateTime(2006, 01, 01),
                 PasportNum = 324763
             };
+            Account newAccount = new Account
+            {
+                Currency = new Currency
+                {
+                    Code = 5,
+                    Name = "RUB",
+                },
+                Amount = 0
+            };
 
+            // Act/Assert
             try
             {
                 clientService.AddClient(ivan);
-                clientService.AddAccount(ivan);
-                Assert.Throws<ExistsException>(() => clientService.AddAccount(ivanEx));
-                Assert.Throws<ExistsException>(() => clientService.AddAccount(ivan));
+                clientService.AddAccount(ivan, newAccount);
+
+                Assert.Throws<ExistsException>(() => clientService.AddAccount(ivanI, newAccount));
+                Assert.Throws<ExistsException>(() => clientService.AddAccount(ivan, newAccount));
+                Assert.Contains(newAccount, clientStorage.Data[ivan]);
             }
             catch (Exception e)
             {
                 Assert.True(false);
             }
+
         }
+
     }
 }
