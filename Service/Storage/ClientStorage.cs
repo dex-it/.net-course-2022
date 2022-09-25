@@ -4,61 +4,60 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Models;
+using ModelsDb;
 using Services.Exceptions;
 
 namespace Services.Storage
 {
     public class ClientStorage : IClientStorage
     {
-        public Dictionary<Client, List<Account>> Data { get; }
+        private DbBank data = new DbBank();
 
-        public void Add(Client client)
+        public DbBank Data => data;
+
+
+        public void Add(ClientDb client)
         {
-            Data.Add(
-                client,
-                new List<Account>
-                {
-                    new Account
-                    {
-                        Currency = new Currency
-                        {
-                            Code = 1,
-                            Name = "Euro",
-                        },
-                        Amount = 0
-                    }
-                });
+
+            Data.clients.Add(client);
+            Data.accounts.Add(
+              new AccountDb
+              {
+                  Currency = new CurrencyDb { Name = "Euro",Code = 1},
+                  Amount = 0,
+                  Client = client
+              });
+            Data.SaveChanges();
         }
 
-        public void AddAccount(Client client, Account account)
+        public void Remove(ClientDb client)
         {
-            Data[client].Add(account);
+            Data.clients.Remove(client);
+            Data.SaveChanges();
         }
 
-        public void Remove(Client item)
+        public void Update(ClientDb client)
         {
-            throw new NotImplementedException();
+            Data.clients.Update(client);
+            Data.SaveChanges();
         }
 
-        public void RemoveAccount(Client client, Account account)
+        public void AddAccount(AccountDb account)
         {
-            throw new NotImplementedException();
+            Data.accounts.Add(account);
+            Data.SaveChanges();
         }
 
-        public void Update(Client item)
+        public void RemoveAccount(AccountDb account)
         {
-            var oldClient = Data.Keys.First(p => p.PasportNum == item.PasportNum);
-            oldClient.Name = item.Name;
-            oldClient.PasportNum = item.PasportNum;
-            oldClient.BirtDate = item.BirtDate;
+            Data.accounts.Remove(account);
+            Data.SaveChanges();
         }
 
-        public void UpdateAccount(Client client, Account account)
+        public void UpdateAccount(AccountDb account)
         {
-            var oldAccount = Data[client].FirstOrDefault(p => p.Currency.Name == account.Currency.Name);
-            oldAccount.Currency.Name = account.Currency.Name;
-            oldAccount.Currency.Code = account.Currency.Code;
-            oldAccount.Amount = account.Amount;
+            Data.accounts.Update(account);
+            Data.SaveChanges();
         }
     }
 }

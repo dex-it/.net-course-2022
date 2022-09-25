@@ -1,20 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModelsDb
 {
     [Table(name: "clients")]
     public class ClientDb
     {
-        [Column (name:"id")]
+        [Key]
+        [Column (name: "id_client")]
         public Guid Id { get; set; }
 
         [Column(name: "name")]
         public string Name { get; set; }
 
-        [Column(name: "age")]
-        public int Age { get; set; }
+        [Column(name: "birt_date")]
+        public DateTime BirtDate { get; set; }
 
         [Column(name: "pasport_num")]
         public int PasportNum { get; set; }
+
+        [Column(name: "accounts_id")]
+        public List<AccountDb> Accounts { get; set; }
     }
 }

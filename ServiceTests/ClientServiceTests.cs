@@ -1,13 +1,10 @@
 using Services;
 using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using Services.Exceptions;
 using Services.Storage;
+using ModelsDb;
+using Services.Filters;
 
 namespace ServiceTests
 {
@@ -16,8 +13,8 @@ namespace ServiceTests
         [Fact]
         public void AddClientLimit18YearsExceptionTest()
         {
-            var clientService = new ClientService(new ClientStorage());
-            var ivan = new Client
+            ClientService clientService = new ClientService(new ClientStorage());
+            ClientDb ivan = new ClientDb
             {
                 Name = "Ivan",
                 BirtDate = new DateTime(2006, 01, 01),
@@ -40,8 +37,8 @@ namespace ServiceTests
         [Fact]
         public void AddClientNoPasportDataExceptionTest()
         {
-            var clientService = new ClientService(new ClientStorage());
-            var ivan = new Client
+            ClientService clientService = new ClientService(new ClientStorage());
+            ClientDb ivan = new ClientDb
             {
                 Name = "Ivan",
                 BirtDate = new DateTime(2006, 01, 01),
@@ -62,58 +59,27 @@ namespace ServiceTests
             }
         }
         [Fact]
-        public void AddClientExistsException()
-        {
-            var clientService = new ClientService(new ClientStorage());
-            var ivan = new Client
-            {
-                Name = "Ivan",
-                BirtDate = new DateTime(2006, 01, 01),
-                PasportNum = 324763
-            };
-            var ivanI = new Client
-            {
-                Name = "Ivan",
-                BirtDate = new DateTime(2006, 01, 01),
-                PasportNum = 324763
-            };
-            try
-            {
-                clientService.AddClient(ivan);
-                clientService.AddClient(ivanI);
-
-            }
-            catch (ExistsException e)
-            {
-                Assert.Equal("Такой клиент существует", e.Message);
-                Assert.Equal(typeof(ExistsException), e.GetType());
-            }
-            catch (Exception e)
-            {
-                Assert.True(false);
-            }
-        }
         public void AddNewAccount_NoExistsClient_And_AccountAlreadyExistsExceptionTest()
         {
             // Arrange
             var clientStorage = new ClientStorage();
             var clientService = new ClientService(clientStorage);
 
-            var ivan = new Client
+            ClientDb ivan = new ClientDb
             {
                 Name = "Ivan",
                 BirtDate = new DateTime(2006, 01, 01),
                 PasportNum = 324763
             };
-            var ivanI = new Client
+            ClientDb ivan = new ClientDb
             {
                 Name = "Ivan",
                 BirtDate = new DateTime(2006, 01, 01),
                 PasportNum = 324763
             };
-            Account newAccount = new Account
+            AccountDb newAccount = new AccountDb
             {
-                Currency = new Currency
+                Currency = new CurrencyDb
                 {
                     Code = 5,
                     Name = "RUB",
@@ -129,7 +95,7 @@ namespace ServiceTests
 
                 Assert.Throws<ExistsException>(() => clientService.AddAccount(ivanI, newAccount));
                 Assert.Throws<ExistsException>(() => clientService.AddAccount(ivan, newAccount));
-                Assert.Contains(newAccount, clientStorage.Data[ivan]);
+                Assert.Contains(newAccount, clientStorage[ivan]);
             }
             catch (Exception e)
             {

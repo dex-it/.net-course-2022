@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ModelsDb;
-
 
 namespace ModelsDb
 {
@@ -9,8 +7,10 @@ namespace ModelsDb
         public DbSet<ClientDb> clients { get; set; }
         public DbSet<EmployeeDb> employees { get; set; }
         public DbSet<AccountDb> accounts { get; set; }
+        public DbSet<CurrencyDb> currencies { get; set; }
         public DbBank()
         {
+            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

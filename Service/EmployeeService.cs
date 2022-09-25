@@ -1,4 +1,5 @@
 ﻿using Models;
+using ModelsDb;
 using Services.Exceptions;
 using Services.Filters;
 using Services.Storage;
@@ -7,14 +8,23 @@ namespace Services
 {
     public class EmployeeService
     {
-        private IEmployeeStorage _iEmployeeStorage { get; set; }
+        DbBank _dbContext;
 
-        public EmployeeService(IEmployeeStorage iEmployeeStorage)
+        public EmployeeService()
         {
-            _iEmployeeStorage = iEmployeeStorage;
+            _dbContext = new DbBank();
         }
+        public EmployeeDb GetEmployee(Guid employeeId)
+        {
+            var employee = _dbContext.employees.FirstOrDefault(c => c.Id == employeeId);
 
-        public void AddEmployee(Employee employee)
+            if (employee == null)
+            {
+                throw new ExistsException("Этого работника не сущетсвует");
+            }
+            return _dbContext.employees.FirstOrDefault(c => c.Id == employeeId); ;
+        }
+        public void AddEmployee(EmployeeDb employee)
         {
             if (employee.PasportNum == 0)
             {
@@ -25,11 +35,11 @@ namespace Services
             {
                 throw new Under18Exception("Работник меньше 18 лет");
             }
-            _iEmployeeStorage.Add(employee);
+            _dbContext.employees.Add(employee);
         }
-        public List<Employee> GetEmployees(EmployeeFilters employeeFilter)
+        public List<EmployeeDb> GetEmployees(EmployeeFilters employeeFilter)
         {
-            var selection = _iEmployeeStorage.Data.Select(p => p);
+            var selection = _dbContext.employees.Select(p => p);
 
             if (employeeFilter.Name != null)
                 selection = selection.
@@ -52,6 +62,32 @@ namespace Services
                    Where(p => p.PasportNum == employeeFilter.PasportNum);
 
             return selection.ToList();
+        }
+        public void UpdateEmployee(EmployeeDb employee)
+        {
+            var oldEmployee = _dbContext.employees.FirstOrDefault(c => c.Id == employee.Id);
+
+            if (!_dbContext.employees.Contains(oldEmployee))
+            {
+                throw new ExistsException("Этого сотрудника не существует");
+            }
+
+            oldEmployee.Id = employee.Id;
+            oldEmployee.Name = employee.Name;
+            oldEmployee.PasportNum = employee.PasportNum;
+            oldEmployee.BirtDate = employee.BirtDate;
+            oldEmployee.Salary = employee.Salary;
+
+        }
+        public void DeleteEmployee(Guid employeeId)
+        {
+            var employee = _dbContext.employees.FirstOrDefault(c => c.Id == employeeId);
+
+            if (employee == null)
+                throw new ExistsException("Этого клиента не сущетсвует");
+            else
+                _dbContext.employees.Remove(employee);
+
         }
     }
 }
