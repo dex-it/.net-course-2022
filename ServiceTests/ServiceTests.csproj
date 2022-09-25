@@ -16,8 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ModelsDb\ModelsDb.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
+    <ProjectReference Include="..\PracticEF\PracticEF.csproj" />
+    <ProjectReference Include="..\PracticeWithListAndDict\PracticeWithListAndDict.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
+    <ProjectReference Include="..\Service\Services.csproj" />
   </ItemGroup>
 
 </Project>
